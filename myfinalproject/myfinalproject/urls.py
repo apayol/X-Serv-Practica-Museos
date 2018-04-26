@@ -19,5 +19,7 @@ from museos import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.barra, name='Página principal'),
+    url(r'^$', views.inicio, name='Página principal'),
+    url(r'^museos$', views.todos, name='Página todos los museos'),
+    url(r'^about$', views.about, name='Info app web'),
 ]
