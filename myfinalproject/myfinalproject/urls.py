@@ -16,10 +16,15 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from museos import views
+from django.contrib.auth.views import logout
+from django.contrib.auth.views import login
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.inicio, name='Página principal'),
     url(r'^museos$', views.todos, name='Página todos los museos'),
     url(r'^about$', views.about, name='Info app web'),
+    url(r'^logout$', logout),
+    url(r'^login$', login),
+    url(r'^accounts/profile/', views.login_exito, name="Login hecho"),
 ]

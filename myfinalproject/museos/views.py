@@ -18,3 +18,8 @@ def todos(request):
 def about(request):
     respuesta = "Aquí viene la info de mi práctica, autoría..."
     return HttpResponse(respuesta)
+
+def login_exito (request):
+    respuesta = "Ha entrado como <b>" + request.user.username
+    respuesta += "</b> exitosamente."
+    return HttpResponse(respuesta)
