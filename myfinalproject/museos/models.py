@@ -1,13 +1,22 @@
 from django.db import models
 
-# Create your models here.
 
 class Museo(models.Model):
     nombre = models.CharField(max_length=64)
-    accesibilidad = models.BooleanField(max_length=280)
-    direccion = models.TextField(max_length=280)
+    accesibilidad = models.BooleanField(default=False)
+    via_clase = models.CharField(max_length=64)
+    via_nombre = models.CharField(max_length=256)
+    via_numero = models.CharField(max_length=16)
+    postal = models.CharField(max_length=16)
+    localidad = models.CharField(max_length=32)
+    barrio = models.CharField(max_length=64)
+    distrito = models.CharField(max_length=64)
     enlace = models.URLField(max_length=256)
-    #ver atributos necesarios
+    descripcion = models.TextField(max_length=512)
+    horario = models.CharField(max_length=64)
+    telefono = models.CharField(max_length=16)
+    email = models.CharField(max_length=64)
+
     def __str__(self):
         return self.nombre
 
