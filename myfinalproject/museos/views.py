@@ -13,6 +13,10 @@ def inicio(request):
     Museo.objects.all().delete() # Borro antigua base datos
     print ("Asignando los atributos de models Museo...")
     link_parse() # Cargo la info de museos en mi base de datos
+    
+    c = Context({})
+    template = get_template ('multiflex37/index.html')
+    respuesta = template.render(c)
 
     # Aquí aparecerán los 5 museos con más comentarios
 
@@ -26,6 +30,9 @@ def todos(request):
 
 def about(request):
     respuesta = "Aquí viene la info de mi práctica, autoría..."
+    c = Context({})
+    template = get_template ('multiflex37/index.html') #hacer multiflex37/about.html
+    respuesta = template.render(c)
     return HttpResponse(respuesta)
 
 def login_exito (request):

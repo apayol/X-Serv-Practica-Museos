@@ -18,8 +18,10 @@ from django.contrib import admin
 from museos import views
 from django.contrib.auth.views import logout
 from django.contrib.auth.views import login
+from django.views.static import serve
 
 urlpatterns = [
+    url(r'static/(.*)', serve, {'document_root': 'sfiles'}, name='Css'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.inicio, name='Página principal'),
     url(r'^museos$', views.todos, name='Página todos los museos'),
