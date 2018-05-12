@@ -23,11 +23,11 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    url(r'^css/(.*)$', serve, {'document_root': 'sfiles'}),
+    url(r'static/(.*)$', serve, {'document_root': 'templates/miplantilla'}),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.inicio, name='Página principal'),
     url(r'^museos$', views.todos, name='Página todos los museos'),
-    url(r'^about$', TemplateView.as_view(template_name='miplantilla/index.html')),
+    url(r'^about$', TemplateView.as_view(template_name='miplantilla/about.html')),
     url(r'^logout$', logout),
     url(r'^login$', login),
     url(r'^accounts/profile/', views.login_exito, name="Login hecho"),
