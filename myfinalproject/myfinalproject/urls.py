@@ -19,6 +19,7 @@ from museos import views
 from django.contrib.auth.views import logout
 from django.contrib.auth.views import login
 from django.views.static import serve
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
@@ -26,7 +27,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.inicio, name='Página principal'),
     url(r'^museos$', views.todos, name='Página todos los museos'),
-    url(r'^about$', views.about, name='Info app web'),
+    url(r'^about$', TemplateView.as_view(template_name='miplantilla/index.html')),
     url(r'^logout$', logout),
     url(r'^login$', login),
     url(r'^accounts/profile/', views.login_exito, name="Login hecho"),

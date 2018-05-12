@@ -29,10 +29,8 @@ def todos(request):
     return HttpResponse(respuesta)
 
 def about(request):
-    template = get_template ('miplantilla/index.html')
-    c = Context({})
-    respuesta = template.render(c)
-    return HttpResponse(respuesta)
+
+    pass
 
 
 def login_exito (request):
