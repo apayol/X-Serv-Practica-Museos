@@ -96,7 +96,7 @@ td.horizontal_center {
 	height: 300px; 
 	display: table-cell;
 	vertical-align: top;
-	background-image: url(../images/header_bg.jpg); /* Sorolla */
+	background-image: url(../images/sorolla.jpg);
 }
 td.header_column {
 	height: 120px;
