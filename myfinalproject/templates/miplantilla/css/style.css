@@ -10,7 +10,7 @@ table.linkcontainer td{
 	opacity: .7;
 	-moz-opacity: .7;
 }
-td.logo_area{
+td.logo_area{ 
 	border-top-width: 0px;
 	border-right-width: 5px;
 	border-bottom-width: 0px;
@@ -23,9 +23,11 @@ td.logo_area{
 	border-right-color: #FFFFFF;
 	border-bottom-color: #FFFFFF;
 	border-left-color: #FFFFFF;
+   background-image: url(../images/logo.jpg);
+   background-size: 160px;
 }
 td.middle_spacer {
-	width: 800px;
+	width: 890px;
 	background-color: #666666;
 }
 td.shadow_right {
@@ -45,7 +47,7 @@ td.body_content {
 }
 td.below_header{
 	background-color: #1F1F1F;
-	height: 50px;
+	height: 30px;
 	color: #CCCCCC;
 	padding: 5px;
 }
@@ -80,7 +82,7 @@ td.bottom_link_container {
 
 td.horizontal_center {
 	background-color: #FFFFFF;
-	border-top-width: 15px;
+	border-top-width: 1px;
 	border-right-width: 0px;
 	border-bottom-width: 1px;
 	border-left-width: 0px;
@@ -92,13 +94,13 @@ td.horizontal_center {
 	border-right-color: #333333;
 	border-bottom-color: #000000;
 	border-left-color: #333333;
-	height: 150px;
+	height: 300px; /* alto de Sorolla */
 	display: table-cell;
 	vertical-align: top;
 	background-image: url(../images/header_bg.jpg);
 }
 td.header_column {
-	height: 100px;
+	height: 120px;
 	vertical-align: middle;
 	color: #FFFFFF;
 	font-size: large;
