@@ -1,18 +1,18 @@
 body {
 	margin: 0px;
-	background-color: #333333;
+	background-color: #000000;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 }
 table.linkcontainer td{
 	background-color: #000000;
-	filter:alpha(opacity=70);
-	opacity: .7;
-	-moz-opacity: .7;
+	filter:alpha(opacity=80);
+	opacity: .8;
+	-moz-opacity: .8;
 }
 td.logo_area{ 
 	border-top-width: 0px;
-	border-right-width: 5px;
+	border-right-width: 0px;
 	border-bottom-width: 0px;
 	border-left-width: 0px;
 	border-top-style: solid;
@@ -24,21 +24,16 @@ td.logo_area{
 	border-bottom-color: #FFFFFF;
 	border-left-color: #FFFFFF;
    background-image: url(../images/logo.jpg);
-   background-size: 160px;
+   background-size: 220px;
+   background-repeat:no-repeat;
+   height: 90px;
+   vertical-align: bottom;
 }
+
 td.middle_spacer {
 	width: 890px;
-	background-color: #666666;
-}
-td.shadow_right {
-	background-image: url(../images/border_shadow_l.jpg);
-	background-repeat: repeat-y;
-	background-position: left;
-}
-td.shadow_left {
-	background-image: url(../images/border_shadow_r.jpg);
-	background-repeat: repeat-y;
-	background-position: right;
+   height: 400px;
+   background-image: url(../images/end_bg.jpg);
 }
 td.body_content {
 	padding: 5px;
@@ -46,10 +41,11 @@ td.body_content {
 	background-repeat: repeat;
 }
 td.below_header{
-	background-color: #1F1F1F;
+	background-image: url(../images/middle_bg.jpg);
 	height: 30px;
-	color: #CCCCCC;
+	color: #FFFFFF;
 	padding: 5px;
+   font-size: 15px;
 }
 td.main_content_box {
 	background-color: #FFFFFF;
@@ -94,10 +90,10 @@ td.horizontal_center {
 	border-right-color: #333333;
 	border-bottom-color: #000000;
 	border-left-color: #333333;
-	height: 300px; /* alto de Sorolla */
+	height: 300px; 
 	display: table-cell;
 	vertical-align: top;
-	background-image: url(../images/header_bg.jpg);
+	background-image: url(../images/header_bg.jpg); /* Sorolla */
 }
 td.header_column {
 	height: 120px;
@@ -137,10 +133,18 @@ a.bottom_link:hover{
 }
 div.bottom_content{
 	color: #FFFFFF;
-	padding: 5px;
+	padding: 20px;
+   font-size: 15px;
+   text-align: center;
 }
 div.navigation {
 	height: 50px;
 	vertical-align: middle;
 	text-align: center;
 }
+div.slider_fotos {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+

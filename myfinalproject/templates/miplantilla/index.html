@@ -17,7 +17,7 @@
         <td class="logo_area">&nbsp;</td>
         <td width="300">
           <form id="form1" name="form1" method="post" action="">
-		  	Login <br />
+		  	   Login <br />
             <input name="search_text" type="text" id="search_text" />
             <input type="submit" name="Submit" value="Enviar" />
           </form>
@@ -30,8 +30,8 @@
     <td class="horizontal_column">&nbsp;</td>
     <td class="horizontal_center"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="linkcontainer">
       <tr>
-        <td><div class="navigation"><a href="#" class="main_link">Página principal</a></div></td>
-        <td><div class="navigation"><a href="#" class="main_link">Gallery</a></div></td>
+        <td><div class="navigation"><a href="#" class="main_link">Inicio</a></div></td>
+        <td><div class="navigation"><a href="#" class="main_link">Todos</a></div></td>
         <td><div class="navigation"><a href="#" class="main_link">About</a></div></td>
       </tr>
     </table></td>
@@ -39,7 +39,7 @@
   </tr>
   <tr>
     <td class="shadow_left">&nbsp;</td>
-    <td class="below_header">Web App Museos de Madrid</td>
+    <td class="below_header">Museos de Madrid /</td>
     <td class="shadow_right">&nbsp;</td>
   </tr>
   <tr>
@@ -47,21 +47,48 @@
     <td class="main_content_box"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td class="left_content">Left Content </td>
-        <td class="body_content"><strong>MUSEOS DE MADRID</strong> <br />
+        <td class="body_content"><strong>Contenido1</strong> <br />
           <br />
-          BBBB</td>
+          Contenido2</td>
       </tr>
     </table></td>
     <td class="shadow_right">&nbsp;</td>
   </tr>
   <tr>
     <td class="shadow_left">&nbsp;</td>
-    <td class="middle_spacer"><div class="bottom_content">CCCCCCCCC</div></td>
+    <td class="middle_spacer"><div class="bottom_content"> 
+      <i>&quot;Madrid rebosa literatura, poesía y música por sus cuatro costados, tanto, que ella misma es un personaje literario.&quot;</i> 
+      <br><strong>Ernest Hemingway</strong></br> </div>
+    <!-- SLIDER FOTOS -->
+    <div class="slider_fotos" style="max-width:500px">
+      <img class="mySlides" src="http://unbuendiaenmadrid.com/wp-content/uploads/2014/07/madrid-gran-via.jpg" style="width:100%">
+      <img class="mySlides" src="http://4.bp.blogspot.com/_pfPUCsLL-6A/TOhKgwB-6JI/AAAAAAAAAcM/3qDDo1mX4rw/s1600/388%2B1%2BEl%2BBosco-El%2BJardin%2Bde%2Blas%2BDelicias%2B1500-Prado.jpg" style="width:100%">
+      <img class="mySlides" src="http://www.madridsensations.com/wp-content/uploads/2012/12/Fuente-de-Apolo.jpg" style="width:100%">
+    </div>
+    <script>
+    var myIndex = 0;
+    carousel();
+ 
+    function carousel() {
+      var i;
+      var x = document.getElementsByClassName("mySlides");
+      for (i = 0; i < x.length; i++) {
+         x[i].style.display = "none";  
+      }
+      myIndex++;
+      if (myIndex > x.length) {myIndex = 1}    
+        x[myIndex-1].style.display = "block";  
+        setTimeout(carousel, 4000); // Cambiar de imagen cada 4 seg
+      }
+    </script>
+    <!-- FIN SLIDER FOTOS -->
+    </td>
     <td class="shadow_right">&nbsp;</td>
   </tr>
+
   <tr>
     <td class="shadow_left">&nbsp;</td>
-    <td class="bottom_link_container"><p><a href="#" class="bottom_link">Link</a> | <a href="#" class="bottom_link">Link</a> | <a href="#" class="bottom_link">Link</a> | <a href="#" class="bottom_link">Link</a> | <a href="#" class="bottom_link">Link</a> </p>
+    <td class="bottom_link_container">
     <p>Todos los derechos reservados &copy; 2018 SAT por <a href="https://github.com/apayol"class="bottom_link">apayol</a><br />
       Esta aplicación utiliza los datos del portal de datos abiertos de la ciudad de Madrid. <a href="https://datos.madrid.es/portal/site/egob
 /menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0a
