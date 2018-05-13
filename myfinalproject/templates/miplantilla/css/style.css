@@ -24,16 +24,19 @@ td.logo_area{
 	border-bottom-color: #FFFFFF;
 	border-left-color: #FFFFFF;
    background-image: url(../images/logo.jpg);
-   background-size: 220px;
+   background-size: 580px;
    background-repeat:no-repeat;
-   height: 90px;
-   vertical-align: bottom;
+   height: 80px;  
 }
 
 td.middle_spacer {
 	width: 890px;
    height: 400px;
    background-image: url(../images/end_bg.jpg);
+   color: #FFFFFF;
+	padding: 20px;
+   font-size: 15px;
+   text-align: center;
 }
 td.body_content {
 	padding: 5px;
@@ -100,7 +103,7 @@ td.header_column {
 	vertical-align: middle;
 	color: #FFFFFF;
 	font-size: large;
-	background-image: url(../images/header2_bg.jpg);
+	background-image: url(../images/end_bg.jpg);
 	background-position: top;
 }
 td.left_content {
@@ -131,12 +134,7 @@ a.bottom_link:active,a.bottom_link:visited,a.bottom_link:link{
 a.bottom_link:hover{
 	color: #CCCCCC;
 }
-div.bottom_content{
-	color: #FFFFFF;
-	padding: 20px;
-   font-size: 15px;
-   text-align: center;
-}
+
 div.navigation {
 	height: 50px;
 	vertical-align: middle;
