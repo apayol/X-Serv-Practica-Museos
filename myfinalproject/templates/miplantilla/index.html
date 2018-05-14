@@ -35,8 +35,8 @@
 			<td class="menu">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="linkcontainer">
 		   		<tr>
-						<td><div class="navigation"><a href="#" class="main_link">Inicio</a></div></td>
-						<td><div class="navigation"><a href="#" class="main_link">Todos</a></div></td>
+						{% block menu %}{% endblock %}
+						<td><div class="navigation"><a href="museos" class="main_link">Todos</a></div></td>
 						<td><div class="navigation"><a href="about" class="main_link">About</a></div></td>
 					</tr>
 		 		</table>

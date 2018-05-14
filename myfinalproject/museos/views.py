@@ -15,7 +15,7 @@ def inicio(request):
     #link_parse() # Cargo la info de museos en mi base de datos
     
     c = Context({})
-    template = get_template ('miplantilla/index.html')
+    template = get_template ('miplantilla/inicio.html')
     respuesta = template.render(c)
 
     # Aquí aparecerán los 5 museos con más comentarios
@@ -24,6 +24,10 @@ def inicio(request):
 
 def todos(request):
     respuesta = "Se muestra un resumen de todos los museos de Madrid"
+
+    c = Context({})
+    template = get_template ('miplantilla/todos.html')
+    respuesta = template.render(c)
     # Aquí aparecerán TODOS los museos
 
     return HttpResponse(respuesta)
