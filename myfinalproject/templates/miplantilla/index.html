@@ -10,104 +10,119 @@
 </head>
 
 <body>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="shadow_left">&nbsp;</td>
-    <td class="header_column">
-	<table width="100%" border="0" cellspacing="10" cellpadding="0">
-      <tr>
-        <td class="logo_area">&nbsp;</td>
-        <td width="300">
-          <form id="form1" name="form1" method="post" action="">
-		  	   Login <br />
-            <input name="search_text" type="text" id="search_text" />
-            <input type="submit" name="Submit" value="Enviar" />
-          </form>
-          </td>
-      </tr>
-    </table></td>
-    <td class="shadow_right">&nbsp;</td>
-  </tr>
-  <tr>
-    <td class="horizontal_column">&nbsp;</td>
-    <td class="horizontal_center"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="linkcontainer">
-      <tr>
-        <td><div class="navigation"><a href="#" class="main_link">Inicio</a></div></td>
-        <td><div class="navigation"><a href="#" class="main_link">Todos</a></div></td>
-        <td><div class="navigation"><a href="#" class="main_link">About</a></div></td>
-      </tr>
-    </table></td>
-    <td class="horizontal_column">&nbsp;</td>
-  </tr>
-  <tr>
-    <td class="shadow_left">&nbsp;</td>
-    <td class="below_header">Museos de Madrid /</td>
-    <td class="shadow_right">&nbsp;</td>
-  </tr>
-  <tr>
-    <td class="shadow_left">&nbsp;</td>
-    <td class="main_content_box"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td class="left_content">Left Content </td>
-        <td class="body_content"><strong>Contenido1</strong> <br />
-          <br />
-          Contenido2</td>
-      </tr>
-    </table></td>
-    <td class="shadow_right">&nbsp;</td>
-  </tr>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td class="shadow_left">&nbsp;</td>
+<!------------------------ CABECERA (LOGO/LOGIN)  -------------------------------->
+			<td class="header_column">
+				<table width="100%" border="0" cellspacing="10" cellpadding="0">
+					<tr>
+						<td class="logo_area">&nbsp;</td>
+						<td width="300">
+							<form id="form1" name="form1" method="post" action=""> Login <br />
+								<input name="search_text" type="text" id="search_text" />
+								<input type="submit" name="Submit" value="Enviar" />
+							</form>
+						</td>
+					</tr>
+		 		</table>
+			</td>
+			<td class="shadow_right">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="horizontal_column">&nbsp;</td>
+<!------------------------ MENU DE RECURSOS DISPONIBLES  -------------------------------->
+			<td class="menu">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="linkcontainer">
+		   		<tr>
+						<td><div class="navigation"><a href="#" class="main_link">Inicio</a></div></td>
+						<td><div class="navigation"><a href="#" class="main_link">Todos</a></div></td>
+						<td><div class="navigation"><a href="about" class="main_link">About</a></div></td>
+					</tr>
+		 		</table>
+			</td>
+		 	<td class="horizontal_column">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="shadow_left">&nbsp;</td>
+<!------------------------ TITULO / PATH  -------------------------------->
+			<td class="below_header">Museos de Madrid /
+				{% block title %}{% endblock %}
+         </td>
+			<td class="shadow_right">&nbsp;</td>
+		</tr>
 
-  <tr>
-    <td class="shadow_left">&nbsp;</td>
-
-    <td class="middle_spacer"> <!-- SLIDER FOTOS/CITAS -->
-    <div class="slider_fotos" style="max-width:700px">
-      <img class="mySlides" src="/static/images/granvia.jpg" style="width:100%">
-      <div class="mySlides"> 
-        <i>&quot;Madrid rebosa literatura, poesía y música por sus cuatro costados, tanto, que ella misma es un personaje literario.&quot;</i> 
-        <br><strong>Ernest Hemingway</strong></br> 
-      </div>
-      <img class="mySlides" src="/static/images/bosco.jpg" style="width:100%">
-      <div class="mySlides"> 
-        <i>&quot;Sueño con pintar y luego pinto mis sueños.&quot;</i> 
-        <br><strong>Vincent van Gogh</strong></br> 
-      </div>
-      <img class="mySlides" src="/static/images/apolo.jpg" style="width:100%">
-      <div class="mySlides"> 
-        <i>&quot;Cultura es lo que queda después de haber olvidado lo que se aprendió.&quot;</i> 
-        <br><strong>André Maurois</strong></br> 
-      </div>
-    </div>
-    <script>
-    var myIndex = 0;
-    carousel();
- 
-    function carousel() {
-      var i;
-      var x = document.getElementsByClassName("mySlides");
-      for (i = 0; i < x.length; i++) {
-         x[i].style.display = "none";  
-      }
-      myIndex++;
-      if (myIndex > x.length) {myIndex = 1}    
-        x[myIndex-1].style.display = "block";  
-        setTimeout(carousel, 4000); // Cambiar de imagen cada 4 seg
-      }
-    </script>
-    </td> <!-- FIN SLIDER -->
-
-    <td class="shadow_right">&nbsp;</td>
-  </tr>
-
-  <tr>
-    <td class="shadow_left">&nbsp;</td>
-    <td class="bottom_link_container">
-    <p>Todos los derechos reservados &copy; 2018 SAT por <a href="https://github.com/apayol"class="bottom_link">apayol</a><br />
-      Esta aplicación utiliza los datos del portal de datos abiertos de la ciudad de Madrid. <a href="https://datos.madrid.es/portal/site/egob
-/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0a
-RCRD&vgnextfmt=default" class="bottom_link">Ver aquí</a> </p>
-    </p></td>
-  </tr>
-</table>
+		<tr>
+			<td class="shadow_left">&nbsp;</td>
+<!------------------------ CONTENIDO PÁGINA  -------------------------------->
+			<td class="main_content_box">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="left_content">Left Content </td>
+						<td class="body_content">
+							{% block content %}{% endblock %}
+                     <br/><br/>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td class="shadow_right">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="shadow_left">&nbsp;</td>
+<!------------------------ SLIDER FOTOS/TEXTO  -------------------------------->
+			<td class="middle_spacer">
+				<div class="slider_fotos" style="max-width:700px">
+					<img class="mySlides" src="/static/images/granvia.jpg" style="width:100%">
+					<div class="mySlides"> 
+						<i>&quot;Madrid rebosa literatura, poesía y música por sus cuatro costados,
+									tanto, que ella misma es un personaje literario.&quot;</i>
+						<br><b>Ernest Hemingway</b></br> 
+					</div>
+					<img class="mySlides" src="/static/images/bosco.jpg" style="width:100%">
+					<div class="mySlides"> 
+						<i>&quot;Sueño con pintar y luego pinto mis sueños.&quot;</i> 
+						<br><b>Vincent van Gogh</b></br> 
+					</div>
+					<img class="mySlides" src="/static/images/apolo.jpg" style="width:100%">
+					<div class="mySlides"> 
+				  		<i>&quot;Cultura es lo que queda después de haber olvidado lo que se aprendió.&quot;</i> 
+				  		<br><b>André Maurois</b></br> 
+					</div>
+			 	</div>
+			 	<script>
+			 	var myIndex = 0;
+			 	carousel();
+		 
+			 	function carousel() {
+					var i;
+					var x = document.getElementsByClassName("mySlides");
+					for (i = 0; i < x.length; i++) {
+				   	x[i].style.display = "none";  
+					}
+					myIndex++;
+					if (myIndex > x.length) {myIndex = 1}    
+				  		x[myIndex-1].style.display = "block";  
+				  		setTimeout(carousel, 4000); // Cambiar de imagen cada 4 seg
+					}
+			 	</script>
+			</td>
+			<td class="shadow_right">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="shadow_left">&nbsp;</td>
+<!------------------------ PIE DE PÁGINA -------------------------------->
+			<td class="bottom_link_container">
+				<p>Todos los derechos reservados &copy; 2018 SAT por 
+					<a href="https://github.com/apayol"class="bottom_link">apayol</a><br />
+		   		Esta aplicación utiliza los datos del portal de datos abiertos de la ciudad 
+					de Madrid. <a href="https://datos.madrid.es/portal/site/egob/menuitem.c05c
+					1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=118f2fdbecc63410VgnVCM1000000b205a
+					0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default" 
+					class="bottom_link">Ver aquí</a> 
+				</p>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>

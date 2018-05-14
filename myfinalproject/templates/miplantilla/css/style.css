@@ -42,6 +42,7 @@ td.body_content {
 	padding: 5px;
 	background-image: url(../images/bg_content.jpg);
 	background-repeat: repeat;
+   font-size: 12px;
 }
 td.below_header{
 	background-image: url(../images/middle_bg.jpg);
@@ -79,7 +80,7 @@ td.bottom_link_container {
 	padding: 5px;
 }
 
-td.horizontal_center {
+td.menu {
 	background-color: #FFFFFF;
 	border-top-width: 1px;
 	border-right-width: 0px;
