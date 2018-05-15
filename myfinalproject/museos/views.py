@@ -68,7 +68,7 @@ def todos(request):
         lista_distritos = Museo.objects.order_by()  # distritos por orden
         lista_distritos = lista_distritos.values_list('distrito', flat=True).distinct()
         # formulario con elementos de base de datos
-        filtrar = "<form action='/museos/' method='POST'>"
+        filtrar = "<form action='/museos' method='POST'>"
         filtrar += "<select name='dist_elegido'>"
         for distr in lista_distritos:
             filtrar += "<option value='" + distr + "'>" + distr
@@ -88,7 +88,7 @@ def todos(request):
         lista_distritos = Museo.objects.order_by()
         lista_distritos = lista_distritos.values_list('distrito', flat=True).distinct()
         # formulario de elementos de base de datos
-        filtrar = "<form action='/museos/' method='POST'>"
+        filtrar = "<form action='/museos' method='POST'>"
         filtrar += "<select name='dist_elegido'>"
         for distr in lista_distritos:
             filtrar += "<option value='" + distr + "'>" + distr
@@ -96,7 +96,7 @@ def todos(request):
         filtrar += "<input type= 'submit' value='Filtrar'>"
         filtrar += "</form>"
         #formulario para ver todos
-        filtrar += "<form action='/museos/' method='GET'>"
+        filtrar += "<form action='/museos' method='GET'>"
         filtrar += "<input type= 'submit' value='Volver a "
         filtrar += "mostrar TODOS los museos'></form>" 
 
