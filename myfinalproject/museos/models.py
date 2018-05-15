@@ -12,11 +12,11 @@ class Museo(models.Model):
     localidad = models.CharField(max_length=32)
     barrio = models.CharField(max_length=64)
     distrito = models.CharField(max_length=64)
-    enlace = models.URLField(max_length=256)
+    enlace = models.URLField(max_length=512)
     descripcion = models.TextField(max_length=512)
-    horario = models.CharField(max_length=64)
-    telefono = models.CharField(max_length=16)
-    email = models.CharField(max_length=64)
+    horario = models.CharField(max_length=512)
+    telefono = models.CharField(max_length=512)
+    email = models.CharField(max_length=512)
     num_comentarios = models.IntegerField(default=0)
     def __str__(self):
         return self.nombre

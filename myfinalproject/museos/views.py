@@ -6,35 +6,55 @@ from .models import Museo
 from .parser import link_parse
 from django.views.decorators.csrf import csrf_exempt
 
+
 @csrf_exempt
 def inicio(request):
     template = get_template ('miplantilla/inicio.html')
-    museos = ""
     lista_museos = Museo.objects.all()
-    #Museo.objects.all().delete() # Borro antigua base datos
-    if len(lista_museos) == 0:
+    #Museo.objects.all().delete() # Borro base datos
+
+    if len(lista_museos) == 0:  # SIN MUSEOS
         if request.method == "GET":
+            titulo = "Sin museos en la base de datos"
             cargar = "<form method = 'POST'><button type='submit'"
             cargar += "name='cargar' value=True>Cargar datos de museos"
             cargar += "</button><br>"
-            c = RequestContext(request, {'cargar': cargar})
+            c = RequestContext(request, {'titulo':titulo, 'cargar': cargar})
         elif request.method == 'POST':
             link_parse() # Cargo la info de museos en mi base de datos
             print ("Asignando los atributos de models Museo...")
             return HttpResponseRedirect('/')
-    else:
+    
+    else:   # CON MUSEOS
         if request.method == "GET":
+            titulo = "Museos con más comentarios"
+            lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
+            lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
+            lista_museos = lista_museos[0:5]  # muestro los 5 primeros
+            #print (lista_museos)
             filtrar = "<form method = 'POST'><button type='submit'"
-            filtrar += "name='accesibilidad' value=True>Mostrar sólo museos "
+            filtrar += "name='accesible' value=1>Mostrar sólo museos "
             filtrar += "accesibles</button><br>"
-            c = RequestContext(request, {'filtrar': filtrar})
-        if request.method == "POST":
-            filtrar = "<form method = 'POST'><button type='submit'"
-            filtrar += "name='accesibilidad' value=False>Mostrar museos con "
-            filtrar += "más comentarios</button><br>"
-            c = RequestContext(request, {'filtrar': filtrar})
+            
+        elif request.method == "POST":
+            accesible = request.body.decode('utf-8').split("=")[1]
+            if int(accesible) == 1:
+                titulo = "Museos accesibles"
+                lista_museos = lista_museos.filter(accesibilidad=True)
+                filtrar = "<form method = 'POST'><button type='submit'"
+                filtrar += "name='accesible' value=0>Mostrar museos con "
+                filtrar += "más comentarios</button><br>"
+            else:
+                titulo = "Museos con más comentarios"
+                lista_museos = lista_museos.exclude(num_comentarios=0) 
+                lista_museos = lista_museos.order_by('-num_comentarios')
+                lista_museos = lista_museos[0:5]
+                filtrar = "<form method = 'POST'><button type='submit'"
+                filtrar += "name='accesible' value=1>Mostrar sólo museos "
+                filtrar += "accesibles</button><br>"
+                
+        c = RequestContext(request, {'titulo':titulo, 'filtrar': filtrar, 'museos': lista_museos})
 
-            # Aquí aparecerán los 5 museos con más comentarios
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 

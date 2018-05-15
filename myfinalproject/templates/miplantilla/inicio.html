@@ -1,9 +1,13 @@
 {% extends "miplantilla/index.html" %}
   
 {% block content %}
-	<h2 style="color:#0B1D86">Museos con más comentarios</h2>
+   
+	<h2 style="color:#0B1D86">{{titulo|safe}}</h2>
 	
-   {{cargar|safe}} {{filtrar|safe}} 
+   {{cargar|safe}} {{filtrar|safe}} <br />
+   {% for museo in museos %}
+       {{museo.nombre}} <br />
+   {% endfor %}
 	
 {% endblock %}
 
