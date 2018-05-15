@@ -56,12 +56,51 @@ def inicio(request):
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
+@csrf_exempt
 def todos(request):
     template = get_template ('miplantilla/todos.html')
     titulo = "Todos los museos"
-    lista_museos = Museo.objects.all()
+    dist_elegido= ""
+    if request.method == 'GET':
+        lista_museos = Museo.objects.all()
+        
+        # opciones del desplegable
+        lista_distritos = Museo.objects.order_by()  # distritos por orden
+        lista_distritos = lista_distritos.values_list('distrito', flat=True).distinct()
+        # formulario con elementos de base de datos
+        filtrar = "<form action='/museos/' method='POST'>"
+        filtrar += "<select name='dist_elegido'>"
+        for distr in lista_distritos:
+            filtrar += "<option value='" + distr + "'>" + distr
+            filtrar += "</option>"
+        filtrar += "<input type= 'submit' value='Filtrar'>"
+        filtrar += "</form>"
 
-    c = RequestContext(request, {'titulo':titulo, 'museos': lista_museos}) 
+
+    elif request.method == "POST":
+        dist_elegido = request.body.decode('utf-8').split("=")[1]
+        titulo += " del distrito " + dist_elegido
+        lista_museos = ""
+        lista_distritos = Museo.objects.filter(distrito=dist_elegido)
+        lista_museos = lista_distritos
+        
+        # opciones del desplegable
+        lista_distritos = Museo.objects.order_by()
+        lista_distritos = lista_distritos.values_list('distrito', flat=True).distinct()
+        # formulario de elementos de base de datos
+        filtrar = "<form action='/museos/' method='POST'>"
+        filtrar += "<select name='dist_elegido'>"
+        for distr in lista_distritos:
+            filtrar += "<option value='" + distr + "'>" + distr
+            filtrar += "</option>"
+        filtrar += "<input type= 'submit' value='Filtrar'>"
+        filtrar += "</form>"
+        #formulario para ver todos
+        filtrar += "<form action='/museos/' method='GET'>"
+        filtrar += "<input type= 'submit' value='Volver a "
+        filtrar += "mostrar TODOS los museos'></form>" 
+
+    c = RequestContext(request, {'titulo':titulo, 'filtrar':filtrar, 'museos': lista_museos}) 
     
     respuesta = template.render(c)
     return HttpResponse(respuesta)
