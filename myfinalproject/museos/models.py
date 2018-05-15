@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Museo(models.Model):
@@ -16,13 +17,28 @@ class Museo(models.Model):
     horario = models.CharField(max_length=64)
     telefono = models.CharField(max_length=16)
     email = models.CharField(max_length=64)
-
+    num_comentarios = models.IntegerField(default=0)
     def __str__(self):
         return self.nombre
 
 class Comentario(models.Model):
-    usuario = models.CharField(max_length=32)
     texto = models.TextField(max_length=280)
     museo = models.ForeignKey(Museo)
     def __str__(self):
-        return self.usuario + ", about: " + self.museo.nombre
+        return "Sobre: " + self.museo.nombre + ": " + self.texto
+
+class ConfigUsuario(models.Model):
+    usuario = models.OneToOneField(User)
+    titulo = models.CharField(max_length=512)
+    tamaño_letra = models.CharField(max_length=512)
+    color_fondo = models.CharField(max_length=512)
+    def __str__(self):
+        return "Configuración de: " + self.usuario
+
+class Favorito(models.Model):
+    usuario = models.ForeignKey(User)
+    museo = models.ForeignKey(Museo)
+    fecha = models.DateTimeField()
+    def __str__(self):
+        return "Favoritos de: " + self.usuario
+  

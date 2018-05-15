@@ -13,9 +13,9 @@ def inicio(request):
     lista_museos = Museo.objects.all()
     #Museo.objects.all().delete() # Borro antigua base datos
     if len(lista_museos) == 0:
-        if request.method == 'GET':
+        if request.method == "GET":
             cargar = "<form method = 'POST'><button type='submit'"
-            cargar += "name='cargar' value=1>Cargar datos de museos"
+            cargar += "name='cargar' value=True>Cargar datos de museos"
             cargar += "</button><br>"
             c = RequestContext(request, {'cargar': cargar})
         elif request.method == 'POST':
@@ -23,10 +23,19 @@ def inicio(request):
             print ("Asignando los atributos de models Museo...")
             return HttpResponseRedirect('/')
     else:
-        c = Context({})
-    respuesta = template.render(c)
+        if request.method == "GET":
+            filtrar = "<form method = 'POST'><button type='submit'"
+            filtrar += "name='accesibilidad' value=True>Mostrar sólo museos "
+            filtrar += "accesibles</button><br>"
+            c = RequestContext(request, {'filtrar': filtrar})
+        if request.method == "POST":
+            filtrar = "<form method = 'POST'><button type='submit'"
+            filtrar += "name='accesibilidad' value=False>Mostrar museos con "
+            filtrar += "más comentarios</button><br>"
+            c = RequestContext(request, {'filtrar': filtrar})
 
-    # Aquí aparecerán los 5 museos con más comentarios
+            # Aquí aparecerán los 5 museos con más comentarios
+    respuesta = template.render(c)
     return HttpResponse(respuesta)
 
 def todos(request):
