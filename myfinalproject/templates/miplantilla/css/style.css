@@ -38,11 +38,13 @@ td.middle_spacer {
    font-size: 15px;
    text-align: center;
 }
+
 td.body_content {
-	padding: 5px;
+	padding: 20px;
 	background-image: url(../images/bg_content.jpg);
 	background-repeat: repeat;
    font-size: 12px;
+   margin-right: 20px;
 }
 td.below_header{
 	background-image: url(../images/middle_bg.jpg);
@@ -147,3 +149,28 @@ div.slider_fotos {
    margin-right: auto;
 }
 
+a.body_content_link {
+	color: #0B1D86
+}
+
+#subtitulo
+{
+	color: #0B1D86;
+   font-weight: bold;
+   font-size: 25px;
+	font-family: "Palatino", sans-serif;
+   margin-bottom: 15px;
+}
+
+#museo
+{
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+   border-bottom: 80%;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #000000;
+	border-bottom-color: #000000;
+}

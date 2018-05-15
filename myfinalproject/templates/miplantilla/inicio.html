@@ -2,12 +2,28 @@
   
 {% block content %}
    
-	<h2 style="color:#0B1D86">{{titulo|safe}}</h2>
+	<div id=subtitulo>
+		{{titulo|safe}}
+	</div>
 	
    {{cargar|safe}} {{filtrar|safe}} <br />
+
    {% for museo in museos %}
-       {{museo.nombre}} <br />
-   {% endfor %}
+	<div id=museo>
+      <h3><a href="{{museo.enlace}}" class="body_content_link">{{museo.nombre}}</a></h3> 
+      
+			{{museo.via_clase}}
+			{{museo.via_nombre}} 
+			{{museo.via_numero}}, 
+			{{museo.postal}} 
+			{{museo.localidad}}
+      
+			<br/><br/>
+      	<a href="/museos/{{museo.id}}" class="body_content_link">Más información</a> 
+		<br/><br/>
+	</div>
+	{% endfor %}
 	
 {% endblock %}
+
 
