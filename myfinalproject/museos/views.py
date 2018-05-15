@@ -26,16 +26,13 @@ def inicio(request):
             return HttpResponseRedirect('/')
     
     else:   # CON MUSEOS
+      
         if request.method == "GET":
             titulo = "Museos con más comentarios"
-            lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
-            lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
-            lista_museos = lista_museos[0:5]  # muestro los 5 primeros
-            #print (lista_museos)
             filtrar = "<form method = 'POST'><button type='submit'"
             filtrar += "name='accesible' value=1>Mostrar sólo museos "
             filtrar += "accesibles</button><br>"
-            
+
         elif request.method == "POST":
             accesible = request.body.decode('utf-8').split("=")[1]
             if int(accesible) == 1:
@@ -46,26 +43,27 @@ def inicio(request):
                 filtrar += "más comentarios</button><br>"
             else:
                 titulo = "Museos con más comentarios"
-                lista_museos = lista_museos.exclude(num_comentarios=0) 
-                lista_museos = lista_museos.order_by('-num_comentarios')
-                lista_museos = lista_museos[0:5]
                 filtrar = "<form method = 'POST'><button type='submit'"
                 filtrar += "name='accesible' value=1>Mostrar sólo museos "
                 filtrar += "accesibles</button><br>"
-                
+
+        lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
+        lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
+        lista_museos = lista_museos[0:5]  # los 5 primeros
+        
         c = RequestContext(request, {'titulo':titulo, 'filtrar': filtrar, 'museos': lista_museos})
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
 def todos(request):
-    respuesta = "Se muestra un resumen de todos los museos de Madrid"
-
-    c = Context({})
     template = get_template ('miplantilla/todos.html')
-    respuesta = template.render(c)
-    # Aquí aparecerán TODOS los museos
+    titulo = "Todos los museos"
+    lista_museos = Museo.objects.all()
 
+    c = RequestContext(request, {'titulo':titulo, 'museos': lista_museos}) 
+    
+    respuesta = template.render(c)
     return HttpResponse(respuesta)
 
 def about(request):

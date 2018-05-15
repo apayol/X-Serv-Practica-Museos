@@ -9,12 +9,14 @@
 {% endblock %}
     
 {% block content %}
-	<h2 style="color:#0B1D86">Información sobre Museos de Madrid</h2>
+	<div id=subtitulo>
+		Información sobre "Museos de Madrid"
+	</div>
 	La aplicación web descarga información	sobre los museos de la ciudad, disponibles
    en el portal de datos abiertos de Madrid y los ofrecer a los usuarios para que puedan 
-	seleccionar sus favoritos y comentar sobre los que elijan.
+	seleccionar sus favoritos y comentar sobre los que elijan.<br/><br/>
 
-	<h3>Arquitectura general</h3>
+	<div id=minisubtitulo>Arquitectura general</div><br/>
 	Se ha construido como un proyecto <b>Django/Python3</b>, con aplicaciones Django, usando SQLite3
    con tablas definidas en modelos de Django. <br/><br/>
 	Se usa Django "Admin Site" para la creación de cuentas a los usuarios en el sistema, y para 
@@ -26,9 +28,9 @@
    colores y tamaños de letra y el color de fondo (entre otros) de los elementos que se definieron 
 	en los HTML de plantilla.<br/><br/>
 	Se descargan los datos de los museos in situ del portal de datos abiertos de Madrid (enlace en 
-	el pie de página). 
+	el pie de página).<br/><br/>
 
-	<h3>Funcionamiento general</h3>
+	<div id=minisubtitulo>Funcionamiento general</div><br/>
 	Los usuarios son dados de alta desde el "Admin Site" de Django. Una vez dados de alta, son 
 	considerados "usuarios registrados".<br/><br/>
 	El listado de museos se cargará a partir del fichero XML cuando un usuario indique que se carguen.
@@ -39,9 +41,9 @@
 	Cualquier navegador puede acceder a la interfaz pública del sitio, que ofrece la página personal 
 	de cada usuario, para cualquier usuario del sitio.<br/><br/>
 	Cualquier usuario podrá indicar que quiere una vista del sitio que solo incluya los Museos 
-	(accesibilidad = "1")
+	(accesibilidad = "1").<br/><br/>
 
-	<h3>Funcionalidad</h3>
+	<div id=minisubtitulo>Funcionalidad</div><br/>
 	<b>Interfaz pública:</b> La <i>página principal</i> (/) tiene un listado de museos y otro con enlaces a páginas
 	personales. <br/><br/>
 	Muestra un listado con los 5 museos con más comentarios (si no hubiera 5 se muestran los
@@ -76,9 +78,9 @@
 	<b>Otros añadidos:</b> Favicon del sitio, sección de imágenes y citas ilustres (bajo estas líneas), 
 	diseño del banner.<br/><br/>
 
-   <h3>Autoría y motivación</h3>
+   <div id=minisubtitulo>Autoría y motivación</div><br/>
 	Esta aplicación ha sido realizada por Adrián Payol Montero, <a href="https://github.com/apayol"class=
-	"bottom_link" style="color:#0B1D86">apayol</a>. Fue creada como práctica final de la asignatura 
+	"bottom_link" style="color:#800000">apayol</a>. Fue creada como práctica final de la asignatura 
 	<b>Servicios y Aplicaciones Telemáticas (SAT)</b>, del tercer curso del grado de Ingeniería en Tecnologías 
 	de la Telecomunicación de la URJC, impartida por Jesús Gonzalez Barahona y Gregorio Robles Martínez, 
 	siguiendo en todo lo posible las indicaciones dadas.<br/>

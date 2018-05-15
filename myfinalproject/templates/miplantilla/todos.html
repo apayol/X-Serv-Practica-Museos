@@ -7,10 +7,21 @@
 {% block title %}
     Museos
 {% endblock %}
-    
+      
 {% block content %}
-	<h2 style="color:#0B1D86">Todos los museos</h2>
-	<br></br><br></br>
+   
+	<div id=subtitulo>
+		{{titulo|safe}}
+	</div>
+
+   {% for museo in museos %}
+	<div id=museo>
+      <h3>{{museo.nombre}}</a></h3> 
+     	<a href="/museos/{{museo.id}}" class="body_content_link">Enlace a su página</a> 
+		<br/><br/>
+	</div>
+	{% endfor %}
 	
 {% endblock %}
+
 
