@@ -105,8 +105,25 @@ def todos(request):
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
-def about(request):
+@csrf_exempt
+def museo(request, id):
+    template = get_template ('miplantilla/museo.html')
+    museo_elegido = Museo.objects.get(id=id)
+    titulo = museo_elegido
+    
+    accesible = museo_elegido.accesibilidad
+    if accesible == True:
+        accesible = "Sí"
+    else:
+        accesible = "No"
 
+    c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido, 'accesible': accesible}) 
+    
+    respuesta = template.render(c)
+    return HttpResponse(respuesta)
+
+
+def about(request):
     pass
 
 
