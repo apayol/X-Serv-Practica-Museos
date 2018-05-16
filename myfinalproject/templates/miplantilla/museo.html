@@ -15,7 +15,7 @@
 	</div>
 
 	<br/>
-	<b>DIRECCIÓN</b>
+	<div id=minisubtitulo2>DIRECCIÓN</div>
 	<div id=descripcion>
 		{{museo.via_clase}}
 		{{museo.via_nombre}} 
@@ -23,36 +23,41 @@
 		{{museo.postal}} 
 		{{museo.localidad}}
 	</div><br/>
+ 
 	
-	<b>BARRIO Y DISTRITO</b>
+	<div id=minisubtitulo2>BARRIO Y DISTRITO</div>
 	<div id=descripcion>
 		{{museo.barrio}}, {{museo.distrito}}
 	</div><br/>
 
-	<b>ACCESIBILIDAD </b>
+	<div id=minisubtitulo2>ACCESIBILIDAD</div>
 	<div id=descripcion>
 		{{accesible}}
 	</div><br/>
 
-	<b>DESCRIPCIÓN</b>
+	<div id=minisubtitulo2>DESCRIPCIÓN</div>
 	<div id=descripcion>
 		{{museo.descripcion}}
 	</div><br/>
 
-	<b>HORARIO</b>
+	<div id=minisubtitulo2>HORARIO</div>
 	<div id=descripcion>
 		{{museo.horario}}
 	</div><br/>
 
-	<b>DATOS DE CONTACTO</b>
+	<div id=minisubtitulo2>DATOS DE CONTACTO</div>
 	<div id=descripcion>
 		Teléfono: {{museo.telefono}} <br/>
 		email: {{museo.email}} <br/>
 		Enlace: <a href="{{museo.enlace}}" class="body_content_link">Página externa</a>
 	</div><br/>
 
-	<b>COMENTARIOS</b>
-
+	<div id=minisubtitulo2>COMENTARIOS</div>
+	{% for comentario in comentarios %}
+		<ul>
+			<li><i>"{{comentario.texto}}"</i></li>
+		</ul>
+	{% endfor %}
 
 	<br/><br/>
 

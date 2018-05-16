@@ -41,7 +41,7 @@ td.middle_spacer {
 
 td.body_content {
 	padding: 20px;
-	background-image: url(../images/bg_content.jpg);
+	background-image: url(../images/bg_content.jpg); 
 	background-repeat: repeat;
    font-size: 12px;
    margin-right: 20px;
@@ -158,6 +158,12 @@ a.body_content_link {
 	color: #0B1D86;
    font-weight: bold;
    font-size: 14px;
+}
+
+#minisubtitulo2
+{
+	color: #000000;
+	font-weight: bold;
 }
 
 #subtitulo

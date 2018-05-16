@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.template import Context, RequestContext
-from .models import Museo
+from .models import Museo, Comentario, ConfigUsuario, Favorito
 from .parser import link_parse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -110,14 +110,18 @@ def museo(request, id):
     template = get_template ('miplantilla/museo.html')
     museo_elegido = Museo.objects.get(id=id)
     titulo = museo_elegido
-    
+    #accesibilidad
     accesible = museo_elegido.accesibilidad
     if accesible == True:
         accesible = "Sí"
     else:
         accesible = "No"
+    #comentarios
+    lista_coments = Comentario.objects.all()
+    coments_museo = lista_coments.filter(museo=museo_elegido)
 
-    c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido, 'accesible': accesible}) 
+    c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido,
+		 'accesible': accesible, 'comentarios': coments_museo}) 
     
     respuesta = template.render(c)
     return HttpResponse(respuesta)
