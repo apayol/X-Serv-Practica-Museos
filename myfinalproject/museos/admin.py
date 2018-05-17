@@ -11,5 +11,5 @@ admin.site.register(Comentario)
 from museos.models import ConfigUsuario
 admin.site.register(ConfigUsuario)
 
-from museos.models import Favorito
-admin.site.register(Favorito)
+from museos.models import Seleccionado
+admin.site.register(Seleccionado)

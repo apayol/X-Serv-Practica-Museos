@@ -35,7 +35,7 @@ class ConfigUsuario(models.Model):
     def __str__(self):
         return self.usuario
 
-class Favorito(models.Model):
+class Seleccionado(models.Model):
     usuario = models.ForeignKey(ConfigUsuario)
     museo = models.ForeignKey(Museo)
     fecha = models.DateTimeField(auto_now_add=True)

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.template import Context, RequestContext
-from .models import Museo, Comentario, ConfigUsuario, Favorito
+from .models import Museo, Comentario, ConfigUsuario, Seleccionado
 from .parser import link_parse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
@@ -53,7 +53,11 @@ def inicio(request):
         lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
         lista_museos = lista_museos[0:5]  # los 5 primeros
         
-        c = RequestContext(request, {'titulo':titulo, 'filtrar': filtrar, 'museos': lista_museos})
+        # Para la barra de usuarios lateral
+        lista_usuarios = ConfigUsuario.objects.all()
+
+        c = RequestContext(request, {'titulo':titulo, 'filtrar': filtrar, 'museos': lista_museos,
+                'usuarios': lista_usuarios})
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
@@ -144,11 +148,13 @@ def login_form(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                try: #lo guardo en mi models
+                try: 
                     registrado = ConfigUsuario.objects.get(usuario=username)
-                except ConfigUsuario.DoesNotExist:
+                except ConfigUsuario.DoesNotExist: 
                     registrado = ConfigUsuario(usuario=username)
-                    registrado.save()
+                    registrado.titulo = "Página de " + str(user) #inicializo el título
+                    registrado.save() #lo guardo en mi models
+                    print(registrado)
 
     return HttpResponseRedirect('/')
 
@@ -167,11 +173,7 @@ def usuario(request,user):
         try:
             pagina_usuario = ConfigUsuario.objects.get(usuario=user)
             titulo = pagina_usuario.titulo
-            if titulo == "":  # Si no tiene título aún (nunca vino a su pag. usuario)
-                pagina_usuario.titulo = "Página de " + str(user)
-                pagina_usuario.save()  # Asigno el titulo por defecto
-                titulo = usuario.titulo
-                            
+                              
             contenido = "Museos favoritos de 5 en 5"            
 
             #if user.is_authenticated:
@@ -183,7 +185,9 @@ def usuario(request,user):
         # si el recurso es incorrecto (nombre de usuario no registrado) 
         except ConfigUsuario.DoesNotExist: 
             titulo = "Esa página no existe."
+            contenido = ""
 
     c = RequestContext(request, {'titulo': titulo, 'contenido': contenido}) 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
+

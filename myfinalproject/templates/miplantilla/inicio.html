@@ -23,7 +23,21 @@
 		<br/><br/>
 	</div>
 	{% endfor %}
-	
+
 {% endblock %}
+
+
+{% block lateral %}
+	<div id="cajausuarios"> 
+		<div id="titulologin">Páginas de usuarios</div>
+			{% for usuario in usuarios %}
+				<h4>
+					{{usuario}}: 
+					<a href="/{{usuario}}" class="body_content_link">{{usuario.titulo}}</a>
+				</h4> 
+			{% endfor %}
+	</div>
+{% endblock %}	
+
 
 
