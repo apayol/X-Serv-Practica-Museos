@@ -18,11 +18,21 @@
 				<table width="100%" border="0" cellspacing="10" cellpadding="0">
 					<tr>
 						<td class="logo_area">&nbsp;</td>
-						<td width="300">
-							<form id="form1" name="form1" method="post" action=""> Login <br />
-								<input name="search_text" type="text" id="search_text" />
-								<input type="submit" name="Submit" value="Enviar" />
-							</form>
+						<td width="150">
+							<!-------------------------- LOGIN ---------------------------->
+						   <div id="login">
+						       <div id="titulologin">Login</div>
+						       {% if user.is_authenticated %}
+						           <br/>¡Bienvenido, {{user.username|safe}}!<br/><br/>
+						           <form action='/logout' method='POST'>
+						           <button class='button' type='submit'>Desconectar</button></form><br/>
+						       {% else %}
+						           <form action='/login' method='POST'>
+						           Usuario <br/> <input type='text' name='username' size="20"><br/>
+						           Contraseña <br/><input type='password' name='password' size="20">
+						           <input class='button' type='submit' value='Entrar'></form>
+						       {% endif %}
+						   </div>
 						</td>
 					</tr>
 		 		</table>

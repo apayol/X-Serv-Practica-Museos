@@ -5,6 +5,8 @@ from django.template import Context, RequestContext
 from .models import Museo, Comentario, ConfigUsuario, Favorito
 from .parser import link_parse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 @csrf_exempt
@@ -128,11 +130,33 @@ def museo(request, id):
 
 
 def about(request):
+    #Directamente en el html
     pass
 
+@csrf_exempt
+def login_form(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        print("Autenticado como: " + str(user))
+        # user devuelve None si no está autenticado
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                try: #lo guardo en mi models
+                    registrado = ConfigUsuario.objects.get(usuario=username)
+                except ConfigUsuario.DoesNotExist:
+                    registrado = ConfigUsuario(usuario=username)
+                    registrado.save()
 
-def login_exito (request):
-    respuesta = "Ha entrado como <b>" + request.user.username
-    respuesta += "</b> exitosamente."
-    return HttpResponse(respuesta)
+    return HttpResponseRedirect('/')
+
+
+@csrf_exempt
+def logout_form(request):
+    if request.method == "POST":
+        logout(request)
+    return HttpResponseRedirect('/')
+
 

@@ -28,17 +28,17 @@ class Comentario(models.Model):
         return "Sobre: " + self.museo.nombre + ": " + self.texto
 
 class ConfigUsuario(models.Model):
-    usuario = models.OneToOneField(User)
+    usuario = models.CharField(max_length=16)
     titulo = models.CharField(max_length=512)
-    tamaño_letra = models.CharField(max_length=512)
-    color_fondo = models.CharField(max_length=512)
+    tamaño_letra = models.IntegerField(default=0)
+    color_fondo = models.CharField(max_length=16)
     def __str__(self):
         return "Configuración de: " + self.usuario
 
 class Favorito(models.Model):
-    usuario = models.ForeignKey(User)
+    usuario = models.ForeignKey(ConfigUsuario)
     museo = models.ForeignKey(Museo)
-    fecha = models.DateTimeField()
+    fecha = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return "Favoritos de: " + self.usuario
   

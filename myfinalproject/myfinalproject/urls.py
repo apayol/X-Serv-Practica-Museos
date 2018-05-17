@@ -28,8 +28,7 @@ urlpatterns = [
     url(r'^$', views.inicio, name='Página principal'),
     url(r'^museos$', views.todos, name='Página todos los museos'),
     url(r'^museos/(\d+)$', views.museo, name='Página particular museo'),
-    url(r'^about$', TemplateView.as_view(template_name='miplantilla/about.html')),
-    url(r'^logout$', logout),
-    url(r'^login$', login),
-    url(r'^accounts/profile/', views.login_exito, name="Login hecho"),
+    url(r'^about$', TemplateView.as_view(template_name='miplantilla/about.html'), name='Info de la app'),
+    url(r'^logout$', views.logout_form, name='Hacer logout'),
+    url(r'^login$', views.login_form, name='Hacer login'),
 ]
