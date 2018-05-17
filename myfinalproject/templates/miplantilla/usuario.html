@@ -1,0 +1,21 @@
+{% extends "miplantilla/index.html" %}
+
+{% block menu %}
+	<td><div class="navigation"><a href="/" class="main_link">Inicio</a></div></td>
+{% endblock %}
+
+{% block title %}
+    {{titulo|safe}}
+{% endblock %}
+      
+{% block content %}
+   
+	<div id=subtitulo>
+		{{titulo|safe}}
+	</div>
+
+	{{contenido|safe}}
+	
+{% endblock %}
+
+

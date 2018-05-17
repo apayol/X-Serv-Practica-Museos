@@ -160,3 +160,30 @@ def logout_form(request):
     return HttpResponseRedirect('/')
 
 
+def usuario(request,user):
+    template = get_template ('miplantilla/usuario.html')
+
+    if request.method == "GET":
+        try:
+            pagina_usuario = ConfigUsuario.objects.get(usuario=user)
+            titulo = pagina_usuario.titulo
+            if titulo == "":  # Si no tiene título aún (nunca vino a su pag. usuario)
+                pagina_usuario.titulo = "Página de " + str(user)
+                pagina_usuario.save()  # Asigno el titulo por defecto
+                titulo = usuario.titulo
+                            
+            contenido = "Museos favoritos de 5 en 5"            
+
+            #if user.is_authenticated:
+            #   contenido = "¿Desea cambiar algo en su configuración?"
+            #   Form1:titulo, Form2:colorfondo,tamañoletra
+
+
+
+        # si el recurso es incorrecto (nombre de usuario no registrado) 
+        except ConfigUsuario.DoesNotExist: 
+            titulo = "Esa página no existe."
+
+    c = RequestContext(request, {'titulo': titulo, 'contenido': contenido}) 
+    respuesta = template.render(c)
+    return HttpResponse(respuesta)

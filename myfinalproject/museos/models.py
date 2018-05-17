@@ -29,11 +29,11 @@ class Comentario(models.Model):
 
 class ConfigUsuario(models.Model):
     usuario = models.CharField(max_length=16)
-    titulo = models.CharField(max_length=512)
+    titulo = models.CharField(max_length=512, default="")
     tamaño_letra = models.IntegerField(default=0)
-    color_fondo = models.CharField(max_length=16)
+    color_fondo = models.CharField(max_length=10, default='#ffffff')
     def __str__(self):
-        return "Configuración de: " + self.usuario
+        return self.usuario
 
 class Favorito(models.Model):
     usuario = models.ForeignKey(ConfigUsuario)
