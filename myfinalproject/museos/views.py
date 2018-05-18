@@ -135,35 +135,45 @@ def museo(request, id):
         form += "<input type= 'hidden' name='formulario' value='1'> "
         form += "<input type= 'submit' value='Enviar'>"
         form += "</form>"
-    
-        #añadir a mi selección de museos
-        form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
-        form2 += "<input type= 'submit' value='Seleccionar museo'>"
-        form2 += "<input type= 'hidden' name='formulario' value='2'> "
-        form2 += "</form>" 
-    
 
-    if request.method == "POST":
-        formu = request.POST['formulario']
-        if formu == "1":
-            # Guardo en mi base de datos el comentario
-            texto = request.POST['texto']
-            nuevo_coment = Comentario(texto=texto, museo=museo_elegido)
-            nuevo_coment.save()
-            #Actualizo el numero de comentarios
-            museo_elegido.num_comentarios = museo_elegido.num_comentarios + 1
-            museo_elegido.save()
-        if formu == "2":
-            # Guardo en mi base de datos la selección
-            #seleccionador = ConfigUsuario.objects.filter(usuario=request.user)
-            select = ConfigUsuario.objects.get(usuario=request.user)
+        # Si envío comentario
+        if request.method == "POST":
+            formu = request.POST['formulario']
+            if formu == "1":
+                # Guardo en mi base de datos el comentario
+                texto = request.POST['texto']
+                nuevo_coment = Comentario(texto=texto, museo=museo_elegido)
+                nuevo_coment.save()
+                #Actualizo el numero de comentarios
+                museo_elegido.num_comentarios = museo_elegido.num_comentarios + 1
+                museo_elegido.save()       
+ 
+        # SELECCIONAR MUSEOS
+        select = ConfigUsuario.objects.get(usuario=request.user)
+        try: #Si ya está seleccionado
+            Seleccionado.objects.get(usuario=select, museo=museo_elegido)
+		      #borrar de mi selección de museos
+            form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+            form2 += "<input type= 'submit' value='Deseleccionar museo'>"
+            form2 += "<input type= 'hidden' name='formulario' value='3'> "
+            form2 += "</form>"
+            # Guardo en mi base de datos la deselección
             nueva_seleccion = Seleccionado(usuario=select, museo=museo_elegido)
-            nueva_seleccion.save()
-                        
+            #nueva_seleccion = null;
+            #borro_seleccion.save() 
+        except Seleccionado.DoesNotExist: #Si no está seleccionado
+            #añadir a mi selección de museos
+            form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+            form2 += "<input type= 'submit' value='Seleccionar museo'>"
+            form2 += "<input type= 'hidden' name='formulario' value='2'> "
+            form2 += "</form>"
+            # Guardo en mi base de datos la selección
+            nueva_seleccion = Seleccionado(usuario=select, museo=museo_elegido)
+            nueva_seleccion.save()              
 
     c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido,
 		 'accesible': accesible, 'comentarios': coments_museo, 'form': form,
-       'form2': form2,}) 
+       'form2': form2}) 
     
     respuesta = template.render(c)
     return HttpResponse(respuesta)

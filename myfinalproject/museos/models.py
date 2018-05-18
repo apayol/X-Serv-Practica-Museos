@@ -40,5 +40,5 @@ class Seleccionado(models.Model):
     museo = models.ForeignKey(Museo)
     fecha = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return "Selección de: " + self.usuario.usuario
+        return "Selección de: " + self.usuario.usuario + ", " + self.museo.nombre
   
