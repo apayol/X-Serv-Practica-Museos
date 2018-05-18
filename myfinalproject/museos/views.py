@@ -127,31 +127,43 @@ def museo(request, id):
     coments_museo = lista_coments.filter(museo=museo_elegido)
     
     form = '' #Sin formulario si no authenticated
+    form2 = ''
     if request.user.is_authenticated():
-            #nuevo comentario si logged
-            form = "<form action='/museos/" + str(id) + "' method='POST'>"
-            form += "<input type= 'text' name='texto' size='80'>"
-            form += "<input type= 'hidden' name='formulario' value='1'> "
-            form += "<input type= 'submit' value='Enviar'>"
-            form += "</form>"
+        #nuevo comentario si logged
+        form = "<form action='/museos/" + str(id) + "' method='POST'>"
+        form += "<input type= 'text' name='texto' size='80'>"
+        form += "<input type= 'hidden' name='formulario' value='1'> "
+        form += "<input type= 'submit' value='Enviar'>"
+        form += "</form>"
     
-            #añadir a mi selección de museos
+        #añadir a mi selección de museos
+        form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+        form2 += "<input type= 'submit' value='Seleccionar museo'>"
+        form2 += "<input type= 'hidden' name='formulario' value='2'> "
+        form2 += "</form>" 
     
 
     if request.method == "POST":
-        nuevo_com = request.POST['formulario']
-        if nuevo_com == "1":
-            # Guardo en mi base de datos
+        formu = request.POST['formulario']
+        if formu == "1":
+            # Guardo en mi base de datos el comentario
             texto = request.POST['texto']
             nuevo_coment = Comentario(texto=texto, museo=museo_elegido)
             nuevo_coment.save()
             #Actualizo el numero de comentarios
             museo_elegido.num_comentarios = museo_elegido.num_comentarios + 1
             museo_elegido.save()
-    
-    
+        if formu == "2":
+            # Guardo en mi base de datos la selección
+            #seleccionador = ConfigUsuario.objects.filter(usuario=request.user)
+            select = ConfigUsuario.objects.get(usuario=request.user)
+            nueva_seleccion = Seleccionado(usuario=select, museo=museo_elegido)
+            nueva_seleccion.save()
+                        
+
     c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido,
-		 'accesible': accesible, 'comentarios': coments_museo, 'form': form}) 
+		 'accesible': accesible, 'comentarios': coments_museo, 'form': form,
+       'form2': form2,}) 
     
     respuesta = template.render(c)
     return HttpResponse(respuesta)
@@ -200,15 +212,15 @@ def usuario(request,user):
                               
             contenido = "Museos favoritos de 5 en 5"            
 
-            #if user.is_authenticated:
+            if request.user.is_authenticated():
             #   contenido = "¿Desea cambiar algo en su configuración?"
             #   Form1:titulo, Form2:colorfondo,tamañoletra
-
+                print("aaa")
 
 
         # si el recurso es incorrecto (nombre de usuario no registrado) 
         except ConfigUsuario.DoesNotExist: 
-            titulo = "Esa página no existe."
+            titulo = "Esa página no existe"
             contenido = ""
 
     c = RequestContext(request, {'titulo': titulo, 'contenido': contenido}) 
