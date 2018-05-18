@@ -125,9 +125,33 @@ def museo(request, id):
     #comentarios
     lista_coments = Comentario.objects.all()
     coments_museo = lista_coments.filter(museo=museo_elegido)
+    
+    form = '' #Sin formulario si no authenticated
+    if request.user.is_authenticated():
+            #nuevo comentario si logged
+            form = "<form action='/museos/" + str(id) + "' method='POST'>"
+            form += "<input type= 'text' name='texto' size='80'>"
+            form += "<input type= 'hidden' name='formulario' value='1'> "
+            form += "<input type= 'submit' value='Enviar'>"
+            form += "</form>"
+    
+            #añadir a mi selección de museos
+    
 
+    if request.method == "POST":
+        nuevo_com = request.POST['formulario']
+        if nuevo_com == "1":
+            # Guardo en mi base de datos
+            texto = request.POST['texto']
+            nuevo_coment = Comentario(texto=texto, museo=museo_elegido)
+            nuevo_coment.save()
+            #Actualizo el numero de comentarios
+            museo_elegido.num_comentarios = museo_elegido.num_comentarios + 1
+            museo_elegido.save()
+    
+    
     c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido,
-		 'accesible': accesible, 'comentarios': coments_museo}) 
+		 'accesible': accesible, 'comentarios': coments_museo, 'form': form}) 
     
     respuesta = template.render(c)
     return HttpResponse(respuesta)

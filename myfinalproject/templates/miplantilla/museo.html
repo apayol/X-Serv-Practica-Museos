@@ -52,15 +52,19 @@
 		Enlace: <a href="{{museo.enlace}}" class="body_content_link">Página externa</a>
 	</div><br/>
 
-	<div id=minisubtitulo2>COMENTARIOS</div>
-	{% for comentario in comentarios %}
-		<ul>
-			<li><i>"{{comentario.texto}}"</i></li>
-		</ul>
-	{% endfor %}
-
-	<br/><br/>
-
+	{% if museo.num_comentarios != 0 %}
+		<div id=minisubtitulo2>COMENTARIOS</div>
+		{% for comentario in comentarios %}
+			<ul>
+				<li><i>"{{comentario.texto}}"</i></li>
+			</ul>
+		{% endfor %}
+	{% endif %}
+	
+	{% if user.is_authenticated %}
+		<br/><div id=minisubtitulo2>NUEVO COMENTARIO</div> <br/>
+			{{form|safe}}
+	{% endif %}
 	
 {% endblock %}
 
