@@ -63,12 +63,10 @@
 	
 	{% if user.is_authenticated %}
 		<br/><div id=minisubtitulo2>NUEVO COMENTARIO</div> <br/>
-			{{form|safe}}<br/>
+			{{form|safe}}<br/><br/>
 
-		
-		<div id=minisubtitulo2>¿AÑADIR A SU SELECCIÓN?</div> <br/>
+		<div id=minisubtitulo2>{{textoseleccion}}</div> <br/>
 			{{form2|safe}}
-
 
 	{% endif %}
 	

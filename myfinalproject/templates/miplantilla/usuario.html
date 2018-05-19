@@ -14,7 +14,23 @@
 		{{titulo|safe}}
 	</div>
 
-	{{contenido|safe}}
+	{% for seleccionado in seleccionados %}
+	<div id=museo>
+      <h3><a href="{{seleccionado.museo.enlace}}" class="body_content_link">
+		{{seleccionado.museo.nombre}}</a></h3> 
+      
+			{{seleccionado.museo.via_clase}}
+			{{seleccionado.museo.via_nombre}} 
+			{{seleccionado.museo.via_numero}}, 
+			{{seleccionado.museo.postal}} 
+			{{seleccionado.museo.localidad}}
+      	<br/><br/>
+			Seleccionado el {{seleccionado.fecha}}
+			<br/><br/>
+      	<a href="/museos/{{seleccionado.museo.id}}" class="body_content_link">Más información</a> 
+		<br/><br/>
+	</div>
+	{% endfor %}
 	
 {% endblock %}
 

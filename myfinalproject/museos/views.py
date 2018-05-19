@@ -82,9 +82,8 @@ def todos(request):
         filtrar += "<input type= 'submit' value='Filtrar'>"
         filtrar += "</form>"
 
-
     elif request.method == "POST":
-        dist_elegido = request.body.decode('utf-8').split("=")[1]
+        dist_elegido = request.body.decode('utf-8').split("=")[1].replace("+", " ")
         titulo += " del distrito " + dist_elegido
         lista_museos = ""
         lista_distritos = Museo.objects.filter(distrito=dist_elegido)
@@ -126,54 +125,86 @@ def museo(request, id):
     lista_coments = Comentario.objects.all()
     coments_museo = lista_coments.filter(museo=museo_elegido)
     
+    #INTERFAZ PRIVADA
     form = '' #Sin formulario si no authenticated
     form2 = ''
+    textoseleccion = ''
     if request.user.is_authenticated():
         #nuevo comentario si logged
         form = "<form action='/museos/" + str(id) + "' method='POST'>"
         form += "<input type= 'text' name='texto' size='80'>"
         form += "<input type= 'hidden' name='formulario' value='1'> "
         form += "<input type= 'submit' value='Enviar'>"
-        form += "</form>"
-
-        # Si envío comentario
-        if request.method == "POST":
+        form += "</form>"      
+        
+        select = ConfigUsuario.objects.get(usuario=request.user)
+        if request.method == "GET":
+            try: #Si ya está seleccionado
+                Seleccionado.objects.get(usuario=select, museo=museo_elegido)
+                textoseleccion = "PERTENECE A TU SELECCIÓN"
+		          #borrar de mi selección de museos
+                form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+                form2 += "<input type= 'submit' value='Deseleccionar museo'>"
+                form2 += "<input type= 'hidden' name='formulario' value='3'> "
+                form2 += "</form>"
+            
+            except Seleccionado.DoesNotExist: #Si no está seleccionado
+                textoseleccion = "¿AÑADIR A SELECCIONADOS?"
+                #añadir a mi selección de museos
+                form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+                form2 += "<input type= 'submit' value='Seleccionar museo'>"
+                form2 += "<input type= 'hidden' name='formulario' value='2'> "
+                form2 += "</form>"
+                    
+        elif request.method == "POST":
             formu = request.POST['formulario']
-            if formu == "1":
+            if formu == "1": # Si envío comentario
                 # Guardo en mi base de datos el comentario
                 texto = request.POST['texto']
                 nuevo_coment = Comentario(texto=texto, museo=museo_elegido)
                 nuevo_coment.save()
                 #Actualizo el numero de comentarios
                 museo_elegido.num_comentarios = museo_elegido.num_comentarios + 1
-                museo_elegido.save()       
- 
-        # SELECCIONAR MUSEOS
-        select = ConfigUsuario.objects.get(usuario=request.user)
-        try: #Si ya está seleccionado
-            Seleccionado.objects.get(usuario=select, museo=museo_elegido)
-		      #borrar de mi selección de museos
-            form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
-            form2 += "<input type= 'submit' value='Deseleccionar museo'>"
-            form2 += "<input type= 'hidden' name='formulario' value='3'> "
-            form2 += "</form>"
-            # Guardo en mi base de datos la deselección
-            nueva_seleccion = Seleccionado(usuario=select, museo=museo_elegido)
-            #nueva_seleccion = null;
-            #borro_seleccion.save() 
-        except Seleccionado.DoesNotExist: #Si no está seleccionado
-            #añadir a mi selección de museos
-            form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
-            form2 += "<input type= 'submit' value='Seleccionar museo'>"
-            form2 += "<input type= 'hidden' name='formulario' value='2'> "
-            form2 += "</form>"
-            # Guardo en mi base de datos la selección
-            nueva_seleccion = Seleccionado(usuario=select, museo=museo_elegido)
-            nueva_seleccion.save()              
+                museo_elegido.save()
+                try: #Si ya está seleccionado
+                    Seleccionado.objects.get(usuario=select, museo=museo_elegido)
+                    textoseleccion = "PERTENECE A TU SELECCIÓN"
+		              #borrar de mi selección de museos
+                    form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+                    form2 += "<input type= 'submit' value='Deseleccionar museo'>"
+                    form2 += "<input type= 'hidden' name='formulario' value='3'> "
+                    form2 += "</form>"
+                except Seleccionado.DoesNotExist: #Si no está seleccionado
+                    textoseleccion = "¿AÑADIR A SELECCIONADOS?"
+                    #añadir a mi selección de museos
+                    form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+                    form2 += "<input type= 'submit' value='Seleccionar museo'>"
+                    form2 += "<input type= 'hidden' name='formulario' value='2'> "
+                    form2 += "</form>"
+            elif formu == "2": # Si añado a selección
+                # Guardo en mi base de datos la selección
+                nueva_seleccion = Seleccionado(usuario=select, museo=museo_elegido)
+                nueva_seleccion.save() 
+                print("se ha añadido")
+                textoseleccion = "PERTENECE A TU SELECCIÓN"
+                form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+                form2 += "<input type= 'submit' value='Deseleccionar museo'>"
+                form2 += "<input type= 'hidden' name='formulario' value='3'> "
+                form2 += "</form>"
+            elif formu == "3": # Si borro de selección
+                # Guardo en mi base de datos la deselección
+                nueva_seleccion = Seleccionado.objects.get(usuario=select, museo=museo_elegido)
+                nueva_seleccion.delete() 
+                print("se ha borrado")
+                textoseleccion = "¿AÑADIR A SELECCIONADOS?"
+                form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
+                form2 += "<input type= 'submit' value='Seleccionar museo'>"
+                form2 += "<input type= 'hidden' name='formulario' value='2'> "
+                form2 += "</form>"             
 
     c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido,
 		 'accesible': accesible, 'comentarios': coments_museo, 'form': form,
-       'form2': form2}) 
+       'form2': form2, 'textoseleccion': textoseleccion}) 
     
     respuesta = template.render(c)
     return HttpResponse(respuesta)
@@ -214,26 +245,33 @@ def logout_form(request):
 
 def usuario(request,user):
     template = get_template ('miplantilla/usuario.html')
-
+    
+    pagina = ''
     if request.method == "GET":
         try:
             pagina_usuario = ConfigUsuario.objects.get(usuario=user)
             titulo = pagina_usuario.titulo
-                              
-            contenido = "Museos favoritos de 5 en 5"            
-
+            selecc_usuario = ""
+            #select = ConfigUsuario.objects.get(usuario=user)
+            #selecc_usuario = Seleccionado.objects.get(usuario=select)[0:5]
+            lista_museos = Seleccionado.objects.all() #todas las elecciones, coger solo del usuario!
+            pagina = "0"
+            print(selecc_usuario)
+           
+				#INTERFAZ PRIVADA
             if request.user.is_authenticated():
             #   contenido = "¿Desea cambiar algo en su configuración?"
             #   Form1:titulo, Form2:colorfondo,tamañoletra
-                print("aaa")
-
+                print("Permisos de usuario")
 
         # si el recurso es incorrecto (nombre de usuario no registrado) 
         except ConfigUsuario.DoesNotExist: 
             titulo = "Esa página no existe"
-            contenido = ""
+            lista_museos = ""
+            pagina = ""
 
-    c = RequestContext(request, {'titulo': titulo, 'contenido': contenido}) 
+    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos, 'pagina': pagina}) 
+
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
