@@ -242,7 +242,7 @@ def logout_form(request):
         logout(request)
     return HttpResponseRedirect('/')
 
-
+@csrf_exempt
 def usuario(request,user):
     template = get_template ('miplantilla/usuario.html')
     
@@ -253,36 +253,55 @@ def usuario(request,user):
     else:
         id = int(id)
     
-    if request.method == "GET":
-        try:
-            pagina_usuario = ConfigUsuario.objects.get(usuario=user)
-            titulo = pagina_usuario.titulo
-            usuario = user
-            total_museos_selec = Seleccionado.objects.filter(usuario=pagina_usuario).count()
+    try:
+        pagina_usuario = ConfigUsuario.objects.get(usuario=user)
+        titulo = pagina_usuario.titulo
+        usuario = user
+        total_museos_selec = Seleccionado.objects.filter(usuario=pagina_usuario).count()
 
-            lista_museos = Seleccionado.objects.all() #todas las elecciones.
-            #solo los seleccionados, de 5 en 5 por id.
-            lista_museos_usuario = Seleccionado.objects.filter(usuario=pagina_usuario)[id:id+5]
-            id += 5  # A siguiente página
+        lista_museos = Seleccionado.objects.all() #todas las elecciones.
+        #solo los seleccionados, de 5 en 5 por id.
+        lista_museos_usuario = Seleccionado.objects.filter(usuario=pagina_usuario)[id:id+5]
+        id += 5  # A siguiente página
+         
+        if id >= total_museos_selec and total_museos_selec < 5:
+            id = -1 # Solo hay una página
+        elif id >= total_museos_selec:
+            id = 0  # Para volver al inicio
             
-            if id >= total_museos_selec and total_museos_selec < 5:
-                id = -1 # Solo hay una página
-            elif id >= total_museos_selec:
-                id = 0  # Para volver al inicio
-            
-				#INTERFAZ PRIVADA
-            if request.user.is_authenticated():
-            #   contenido = "¿Desea cambiar algo en su configuración?"
-            #   Form1:titulo, Form2:colorfondo,tamañoletra
-                print("Permisos de usuario")
+        form1 = ''
+        form2 = ''
+        form3 = ''
+        # INTERFAZ PRIVADA: 
+        # ha de estár autentificado y en su página
+        if request.user.is_authenticated() and user == usuario:
+            # Cambiar de título personal
+            form1 = "<form action='/" + usuario + "'  method='POST'>"
+            form1 += "<input type= 'text' name='nuevo_titulo' size='40'>"
+            form1 += "<input type= 'hidden' name='formulario' value='1'> "
+            form1 += "<input type= 'submit' value='Enviar'>"
+            form1 += "</form>" 
+ 
+            if request.method == "POST":
+                formu = request.POST['formulario']
+                if formu == "1": # Si envío nuevo título
+                    titulo = request.POST['nuevo_titulo']
+                    # Actualizo el título
+                    select = ConfigUsuario.objects.filter(usuario=request.user).update(titulo=titulo)
 
-        # si el recurso es incorrecto (nombre de usuario no registrado) 
-        except ConfigUsuario.DoesNotExist: 
-            titulo = "Esa página no existe"
-            lista_museos_usuario = ""
-            id = ''
 
-    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 'id': id, 'usuario': usuario}) 
+    # si el recurso es incorrecto (nombre de usuario no registrado) 
+    except ConfigUsuario.DoesNotExist: 
+        titulo = "Error, url no existe"
+        lista_museos_usuario = '' 
+        usuario = ''
+        form1 = ''
+        form2 = ''
+        form3 = ''
+        id = ''
+
+    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 
+         'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2, 'form3': form3})
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
