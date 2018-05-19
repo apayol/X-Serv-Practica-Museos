@@ -329,5 +329,3 @@ def xml_usuario(request, user):
     respuesta = template.render(c)
     return HttpResponse(respuesta, content_type="text/xml") #tipo xml
 
-
-
