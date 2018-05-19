@@ -65,20 +65,22 @@
 		<tr>
 			<td class="shadow_left">&nbsp;</td>
 <!------------------------ CONTENIDO PÁGINA  -------------------------------->
-			<td class="main_content_box">
-				<table width="100%" border="0" cellspacing="0" cellpadding="0">
-					<tr>
-                  <!------------------ COLUMNA LATERAL ----------------------->
-						<td class="left_content">
-							{% block lateral %}{% endblock %}
-						</td>
-						<td class="body_content">
-							{% block content %}{% endblock %}
-                     <br/><br/>
-						</td>
-					</tr>
-				</table>
-			</td>
+			{% block style %}
+				<td class="main_content_box">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+	                  <!------------------ COLUMNA LATERAL ----------------------->
+							<td class="left_content">
+								{% block lateral %}{% endblock %}
+							</td>
+							<td class="body_content">
+								{% block content %}{% endblock %}
+	                     <br/><br/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			{% endblock %}
 			<td class="shadow_right">&nbsp;</td>
 		</tr>
 		<tr>

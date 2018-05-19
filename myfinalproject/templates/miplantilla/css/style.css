@@ -2,7 +2,7 @@ body {
 	margin: 0px;
 	background-color: #000000;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size: {{letra}}; <!--Tamaño letra-->
 }
 table.linkcontainer td{
 	background-color: #000000;
@@ -40,8 +40,7 @@ td.middle_spacer {
 
 td.body_content {
 	padding: 20px;
-	background-image: url(../images/bg_content.jpg); 
-	background-repeat: repeat;
+   background-color: {{fondo}}; <!--Color Usuario-->
    font-size: 12px;
    margin-right: 20px;
 }
@@ -113,8 +112,6 @@ td.left_content {
 	width: 200px;
 	padding: 5px;
 	vertical-align: top;
-	background-image: url(../images/bg_content.jpg);
-	background-repeat: repeat;
 }
 
 a.main_link:active,a.main_link:visited,a.main_link:link{

@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^about$', TemplateView.as_view(template_name='miplantilla/about.html'), name='Info de la app'),
     url(r'^logout$', views.logout_form, name='Hacer logout'),
     url(r'^login$', views.login_form, name='Hacer login'),
+    url(r'^(.+)/xml', views.xml_usuario, name="Xml de la página de usuario"),
     url(r'^(.*)$', views.usuario, name="Página particular de usuario"),
 ]

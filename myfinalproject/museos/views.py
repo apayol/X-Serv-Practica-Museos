@@ -245,8 +245,7 @@ def logout_form(request):
 @csrf_exempt
 def usuario(request,user):
     template = get_template ('miplantilla/usuario.html')
-    
-    # Inicializo el id para hacer la qs y poder hacer páginas
+    # Inicializo el id para hacer la qs y poder acceder por páginas
     id = request.GET.get('id')
     if id == None:
         id = 0
@@ -268,7 +267,11 @@ def usuario(request,user):
             id = -1 # Solo hay una página
         elif id >= total_museos_selec:
             id = 0  # Para volver al inicio
-            
+        
+        xml_usu_form = '<form method="GET" action="/'+usuario+'/xml">'
+        xml_usu_form += '<button type="submit">Generar canal XML</button>'
+        xml_usu_form += '</form>'
+    
         form1 = ''
         form2 = ''
         # INTERFAZ PRIVADA: 
@@ -311,8 +314,20 @@ def usuario(request,user):
         id = ''
 
     c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 
-         'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2})
+         'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2, 'xml_usu_form': xml_usu_form})
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
+
+def xml_usuario(request, user):
+    # Generar canal XML de la página de usuario.
+    template = get_template('miplantilla/usuario_xml.xml')
+    usuario = ConfigUsuario.objects.get(usuario=user)
+    selecc_usuario = Seleccionado.objects.filter(usuario=usuario)  
+
+    c = RequestContext(request, {'usuario': usuario, 'seleccionados': selecc_usuario})
+    respuesta = template.render(c)
+    return HttpResponse(respuesta, content_type="text/xml") #tipo xml
+
+
 
