@@ -374,14 +374,14 @@ def json_inicio(request):
     respuesta = template.render(c)
     return HttpResponse(respuesta, content_type="text/json") #tipo json
 
+def rss_comentarios(request):
+    #Generar rss con todos los comentarios. (Enlace desde inicio)
+    template = get_template('miplantilla/rss_comentarios.rss')
+    comentarios = Comentario.objects.all()
 
-
-
-
-
-
-
-
+    c = RequestContext(request, {'comentarios': comentarios})
+    respuesta = template.render(c)
+    return HttpResponse(respuesta, content_type="text/rss")
 
 
 

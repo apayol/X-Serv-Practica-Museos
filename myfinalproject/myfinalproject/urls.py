@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'^(.+)/json$', views.json_usuario, name='JSON de la página de usuario'),
     url(r'^xml$', views.xml_inicio, name="XML de la página de inicio"),
     url(r'^json$', views.json_inicio, name="JSON de la página de inicio"),
+    url(r'^rss$', views.rss_comentarios, name="RSS de comentarios"),
     url(r'^(.*)$', views.usuario, name="Página particular de usuario"),
 ]
