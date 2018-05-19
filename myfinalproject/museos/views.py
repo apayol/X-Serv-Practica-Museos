@@ -271,7 +271,6 @@ def usuario(request,user):
             
         form1 = ''
         form2 = ''
-        form3 = ''
         # INTERFAZ PRIVADA: 
         # ha de estár autentificado y en su página
         if request.user.is_authenticated() and user == usuario:
@@ -280,15 +279,27 @@ def usuario(request,user):
             form1 += "<input type= 'text' name='nuevo_titulo' size='40'>"
             form1 += "<input type= 'hidden' name='formulario' value='1'> "
             form1 += "<input type= 'submit' value='Enviar'>"
-            form1 += "</form>" 
+            form1 += "</form>"
+            # Cambiar estilo de CSS
+            form2 = "<form action='/" + usuario + "'  method='POST'>"
+            form2 += "Color de fondo: <input type= 'text' name='nuevo_color' size='10'>  "
+            form2 += " Tamaño de letra: <input type= 'text' name='nueva_letra' size='10'>"
+            form2 += "<input type= 'hidden' name='formulario' value='2'> "
+            form2 += "<input type= 'submit' value='Enviar'>"
+            form2 += "</form>" 
  
             if request.method == "POST":
                 formu = request.POST['formulario']
                 if formu == "1": # Si envío nuevo título
                     titulo = request.POST['nuevo_titulo']
                     # Actualizo el título
-                    select = ConfigUsuario.objects.filter(usuario=request.user).update(titulo=titulo)
-
+                    ConfigUsuario.objects.filter(usuario=request.user).update(titulo=titulo)
+                elif formu == "2": # Si envío nuevo estilo
+                    color = request.POST['nuevo_color']
+                    letra = request.POST['nueva_letra']
+                    # Actualizo el color de fondo
+                    ConfigUsuario.objects.filter(usuario=request.user).update(color_fondo=color)
+                    ConfigUsuario.objects.filter(usuario=request.user).update(tamaño_letra=letra)
 
     # si el recurso es incorrecto (nombre de usuario no registrado) 
     except ConfigUsuario.DoesNotExist: 
@@ -297,11 +308,10 @@ def usuario(request,user):
         usuario = ''
         form1 = ''
         form2 = ''
-        form3 = ''
         id = ''
 
     c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 
-         'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2, 'form3': form3})
+         'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2})
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
