@@ -31,6 +31,14 @@
 		<br/><br/>
 	</div>
 	{% endfor %}
+
+   {% if id == 0 %}
+        <br/><a href="/{{usuario}}" class="body_content_link"> &lt;&lt;Volver a la primera página</a>
+   {% elif id > 0 %}
+        <br/><a href="/{{usuario}}?id={{id}}" class="body_content_link"> &gt;&gt;Página siguiente</a>
+	{% elif id == -1 %}
+        <!--Página única-->
+	{% endif %}
 	
 {% endblock %}
 

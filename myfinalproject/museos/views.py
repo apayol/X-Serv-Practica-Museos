@@ -246,17 +246,30 @@ def logout_form(request):
 def usuario(request,user):
     template = get_template ('miplantilla/usuario.html')
     
-    pagina = ''
+    # Inicializo el id para hacer la qs y poder hacer páginas
+    id = request.GET.get('id')
+    if id == None:
+        id = 0
+    else:
+        id = int(id)
+    
     if request.method == "GET":
         try:
             pagina_usuario = ConfigUsuario.objects.get(usuario=user)
             titulo = pagina_usuario.titulo
+            usuario = user
+            total_museos_selec = Seleccionado.objects.filter(usuario=pagina_usuario).count()
 
             lista_museos = Seleccionado.objects.all() #todas las elecciones.
-            lista_museos_usuario = Seleccionado.objects.filter(usuario=pagina_usuario)
-            pagina = "0"
-            print(lista_museos)
-           
+            #solo los seleccionados, de 5 en 5 por id.
+            lista_museos_usuario = Seleccionado.objects.filter(usuario=pagina_usuario)[id:id+5]
+            id += 5  # A siguiente página
+            
+            if id >= total_museos_selec and total_museos_selec < 5:
+                id = -1 # Solo hay una página
+            elif id >= total_museos_selec:
+                id = 0  # Para volver al inicio
+            
 				#INTERFAZ PRIVADA
             if request.user.is_authenticated():
             #   contenido = "¿Desea cambiar algo en su configuración?"
@@ -266,10 +279,10 @@ def usuario(request,user):
         # si el recurso es incorrecto (nombre de usuario no registrado) 
         except ConfigUsuario.DoesNotExist: 
             titulo = "Esa página no existe"
-            lista_museos = ""
-            pagina = ""
+            lista_museos_usuario = ""
+            id = ''
 
-    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 'pagina': pagina}) 
+    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 'id': id, 'usuario': usuario}) 
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
