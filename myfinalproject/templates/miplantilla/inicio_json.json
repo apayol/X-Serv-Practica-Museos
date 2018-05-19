@@ -1,0 +1,23 @@
+{
+    "museos": {
+        "titulo": "Canal JSON de los 5 museos con más comentarios",
+        {% for museo in museos %}
+        "museo":{
+            "nombre": "{{museo.nombre}}",
+            "accesibilidad":"{{museo.accesibilidad}}",
+            "via_clase":"{{museo.via_clase}}",
+            "via_nombre":"{{museo.via_nombre}}",
+            "via_numero":"{{museo.via_numero}}",
+            "postal":"{{museo.postal}}",
+            "localidad":"{{museo.localidad}}",
+            "barrio":"{{museo.barrio}}",
+            "distrito":"{{museo.distrito}}",
+            "enlace":"{{museo.enlace}}",
+            "descripcion":"{{museo.descripcion}}",
+            "horario":"{{museo.horario}}",
+            "telefono":"{{museo.telefono}}",
+            "email":"{{museo.email}}",
+            },
+        }{% endfor %}
+    }
+}

@@ -42,7 +42,7 @@
 	{% endif %}
 
 	<br/><br/>
-   {{xml_usu_form|safe}}
+   {{xml_usu_form|safe}} <br/> {{json_usu_form|safe}}
 
 	{% if user.is_authenticated and user.username == usuario %}
 		<br/><br/><br/>
@@ -52,7 +52,7 @@
 		<br/><div id=minisubtitulo2> ¿Cambiar el estilo CSS?</div><br/>
 		{{form2|safe}}
    {% endif %}
+   
 	
 {% endblock %}
-
 

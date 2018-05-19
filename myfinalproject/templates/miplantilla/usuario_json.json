@@ -1,0 +1,26 @@
+{
+    "museos": {
+        "titulo": "Canal JSON de los museos seleccionados por {{usuario}}",
+        {% for seleccionado in seleccionados %}
+        "museo":{
+            "nombre": "{{seleccionado.museo.nombre}}",
+            "accesibilidad":"{{seleccionado.museo.accesibilidad}}",
+            "via_clase":"{{seleccionado.museo.via_clase}}",
+            "via_nombre":"{{seleccionado.museo.via_nombre}}",
+            "via_numero":"{{seleccionado.museo.via_numero}}",
+            "postal":"{{seleccionado.museo.postal}}",
+            "localidad":"{{seleccionado.museo.localidad}}",
+            "barrio":"{{seleccionado.museo.barrio}}",
+            "distrito":"{{seleccionado.museo.distrito}}",
+            "enlace":"{{seleccionado.museo.enlace}}",
+            "descripcion":"{{seleccionado.museo.descripcion}}",
+            "horario":"{{seleccionado.museo.horario}}",
+            "telefono":"{{seleccionado.museo.telefono}}",
+            "email":"{{seleccionado.museo.email}}",
+            },
+            "fecha_seleccion": {
+                "fecha_seleccion": "{{ seleccionado.fecha }}",
+            },
+        }{% endfor %}
+    }
+}

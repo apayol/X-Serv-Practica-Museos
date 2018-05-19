@@ -2,7 +2,7 @@ body {
 	margin: 0px;
 	background-color: #000000;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: {{letra}}; <!--Tamaño letra-->
+	font-size: 12px; <!--Tamaño letra-->
 }
 table.linkcontainer td{
 	background-color: #000000;
@@ -40,7 +40,7 @@ td.middle_spacer {
 
 td.body_content {
 	padding: 20px;
-   background-color: {{fondo}}; <!--Color Usuario-->
+   background-color: #FFFFFF; <!--Color Usuario-->
    font-size: 12px;
    margin-right: 20px;
 }

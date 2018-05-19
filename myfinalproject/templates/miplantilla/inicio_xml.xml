@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<museos>
+    <titulo>
+        Canal XML de los 5 museos con más comentarios
+    </titulo>
+    {% for museo in museos %}
+        <museo>
+            <nombre>{{museo.nombre}}</nombre>
+            <accesibilidad>{{museo.accesibilidad}}</accesibilidad>
+            <via_clase>{{museo.via_clase}}</via_clase>
+            <via_nombre>{{museo.via_nombre}}</via_nombre>
+            <via_numero>{{museo.via_numero}}</via_numero>
+            <postal>{{museo.postal}}</postal>
+            <localidad>{{museo.localidad}}</localidad>
+            <barrio>{{museo.barrio}}</barrio>
+            <distrito>{{museo.distrito}}</distrito>
+            <enlace>{{museo.enlace}}</enlace>
+            <descripcion>{{museo.descripcion}}</descripcion>
+            <horario>{{museo.horario}}</horario>
+            <telefono>{{museo.telefono}}</telefono>
+            <email>{{museo.email}}</email>
+        </museo>
+   {% endfor %}
+</museos>

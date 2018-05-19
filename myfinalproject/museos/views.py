@@ -36,14 +36,14 @@ def inicio(request):
             filtrar += "accesibles</button><br>"
 
         elif request.method == "POST":
-            accesible = request.body.decode('utf-8').split("=")[1]
-            if int(accesible) == 1:
+            formu = request.POST['accesible']
+            if formu == "1":
                 titulo = "Museos accesibles"
                 lista_museos = lista_museos.filter(accesibilidad=True)
                 filtrar = "<form method = 'POST'><button type='submit'"
                 filtrar += "name='accesible' value=0>Mostrar museos con "
                 filtrar += "más comentarios</button><br>"
-            else:
+            elif formu == "0":
                 titulo = "Museos con más comentarios"
                 filtrar = "<form method = 'POST'><button type='submit'"
                 filtrar += "name='accesible' value=1>Mostrar sólo museos "
@@ -268,9 +268,15 @@ def usuario(request,user):
         elif id >= total_museos_selec:
             id = 0  # Para volver al inicio
         
+        # Botón para generar el canal XML de página usuario
         xml_usu_form = '<form method="GET" action="/'+usuario+'/xml">'
         xml_usu_form += '<button type="submit">Generar canal XML</button>'
         xml_usu_form += '</form>'
+
+        # Botón para generar el canal JSON de página usuario
+        json_usu_form = '<form method="GET" action="/'+usuario+'/json">'
+        json_usu_form += '<button type="submit">Generar canal JSON</button>'
+        json_usu_form += '</form>'
     
         form1 = ''
         form2 = ''
@@ -303,7 +309,7 @@ def usuario(request,user):
                     # Actualizo el color de fondo
                     ConfigUsuario.objects.filter(usuario=request.user).update(color_fondo=color)
                     ConfigUsuario.objects.filter(usuario=request.user).update(tamaño_letra=letra)
-
+    
     # si el recurso es incorrecto (nombre de usuario no registrado) 
     except ConfigUsuario.DoesNotExist: 
         titulo = "Error, url no existe"
@@ -312,9 +318,12 @@ def usuario(request,user):
         form1 = ''
         form2 = ''
         id = ''
+        xml_usu_form = ''
+        json_usu_form = ''
 
     c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 
-         'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2, 'xml_usu_form': xml_usu_form})
+        'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2, 'xml_usu_form': xml_usu_form,
+        'json_usu_form': json_usu_form}) 
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
@@ -328,4 +337,53 @@ def xml_usuario(request, user):
     c = RequestContext(request, {'usuario': usuario, 'seleccionados': selecc_usuario})
     respuesta = template.render(c)
     return HttpResponse(respuesta, content_type="text/xml") #tipo xml
+
+def json_usuario(request, user):
+    # Generar canal JSON de la página de usuario.
+    template = get_template('miplantilla/usuario_json.json')
+    usuario = ConfigUsuario.objects.get(usuario=user)
+    selecc_usuario = Seleccionado.objects.filter(usuario=usuario)  
+
+    c = RequestContext(request, {'usuario': usuario, 'seleccionados': selecc_usuario})
+    respuesta = template.render(c)
+    return HttpResponse(respuesta, content_type="text/json") #tipo json
+
+def xml_inicio(request):
+    # Generar canal XML de la página de inicio.
+    template = get_template('miplantilla/inicio_xml.xml')
+
+    lista_museos = Museo.objects.all()
+    lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
+    lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
+    lista_museos = lista_museos[0:5] 
+
+    c = RequestContext(request, {'museos': lista_museos})
+    respuesta = template.render(c)
+    return HttpResponse(respuesta, content_type="text/xml") #tipo xml
+
+def json_inicio(request):
+    # Generar canal JSON de la página de inicio.
+    template = get_template('miplantilla/inicio_json.json')
+
+    lista_museos = Museo.objects.all()
+    lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
+    lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
+    lista_museos = lista_museos[0:5] 
+
+    c = RequestContext(request, {'museos': lista_museos})
+    respuesta = template.render(c)
+    return HttpResponse(respuesta, content_type="text/json") #tipo json
+
+
+
+
+
+
+
+
+
+
+
+
+
 
