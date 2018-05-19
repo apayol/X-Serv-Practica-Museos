@@ -251,12 +251,11 @@ def usuario(request,user):
         try:
             pagina_usuario = ConfigUsuario.objects.get(usuario=user)
             titulo = pagina_usuario.titulo
-            selecc_usuario = ""
-            #select = ConfigUsuario.objects.get(usuario=user)
-            #selecc_usuario = Seleccionado.objects.get(usuario=select)[0:5]
-            lista_museos = Seleccionado.objects.all() #todas las elecciones, coger solo del usuario!
+
+            lista_museos = Seleccionado.objects.all() #todas las elecciones.
+            lista_museos_usuario = Seleccionado.objects.filter(usuario=pagina_usuario)
             pagina = "0"
-            print(selecc_usuario)
+            print(lista_museos)
            
 				#INTERFAZ PRIVADA
             if request.user.is_authenticated():
@@ -270,7 +269,7 @@ def usuario(request,user):
             lista_museos = ""
             pagina = ""
 
-    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos, 'pagina': pagina}) 
+    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 'pagina': pagina}) 
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
