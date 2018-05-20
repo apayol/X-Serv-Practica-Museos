@@ -405,14 +405,13 @@ def registro(request):
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
-def css(request, nombre_css):
+def css(request, mi_css):
     if request.user.is_authenticated():
-        print("Cargando plantilla de usuario...")
+        #print("Cargando plantilla de usuario...")
         conf_usu = ConfigUsuario.objects.get(usuario=request.user)
         tamaño_letra = conf_usu.tamaño_letra
         color_fondo = conf_usu.color_fondo
         tamaño_letra = str(tamaño_letra) + '%'
-        print(tamaño_letra)
     else:
         # plantilla por defecto
         tamaño_letra = '75%'

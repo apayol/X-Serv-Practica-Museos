@@ -19,79 +19,91 @@
 
 	<div id=minisubtitulo>Arquitectura general</div>
    <div id=descripcion>
-	Se ha construido como un proyecto <b>Django/Python3</b>, con aplicaciones Django, usando SQLite3
-   con tablas definidas en modelos de Django. <br/><br/>
-	Se usa Django "Admin Site" para la creación de cuentas a los usuarios en el sistema, y para 
-	la gestión general de las bases de datos necesarias.<br/><br/>
-	Se ha utilizado una plantilla Django para definir las páginas que se sirven a los navegadores 
-	de los usuarios. Estas plantillas incluyen: un banner, una caja de login o logout, una barra
-   de menú de opciones y un pie de página.<br/><br/>
-   Se ha usado una hoja de estilo CSS para determinar la apariencia, en la cual se especifican: 
-   colores y tamaños de letra y el color de fondo (entre otros) de los elementos que se definieron 
-	en los HTML de plantilla.<br/><br/>
-	Se descargan los datos de los museos in situ del portal de datos abiertos de Madrid (enlace en 
-	el pie de página).<br/><br/>
+		Se ha construido como un proyecto <b>Django/Python3</b>, con aplicaciones Django, usando SQLite3
+		con tablas definidas en modelos de Django. <br/><br/>
+		Se usa Django "Admin Site" para la creación de cuentas a los usuarios en el sistema, y para 
+		la gestión general de las bases de datos necesarias.<br/><br/>
+		Se ha utilizado una plantilla Django para definir las páginas que se sirven a los navegadores 
+		de los usuarios. Estas plantillas incluyen: un banner, una caja de login o logout, una barra
+		de menú de opciones y un pie de página.<br/><br/>
+		Se ha usado una hoja de estilo CSS para determinar la apariencia, en la cual se especifican: 
+		colores y tamaños de letra y el color de fondo (entre otros) de los elementos que se definieron 
+		en los HTML de plantilla.<br/><br/>
+		Se descargan los datos de los museos in situ del portal de datos abiertos de Madrid (enlace en 
+		el pie de página).<br/><br/>
    </div>
 
 	<div id=minisubtitulo>Funcionamiento general</div>
    <div id=descripcion>
-	Los usuarios son dados de alta desde el "Admin Site" de Django. Una vez dados de alta, son 
-	considerados "usuarios registrados".<br/><br/>
-	El listado de museos se cargará a partir del fichero XML cuando un usuario indique que se carguen.
-	Hasta que un usuario no indique que se carguen por primera vez, no habrá listado de museos en la base
-	de datos de la aplicación.<br/><br/>
-	Los usuarios registrados pueden crear su selección de museos favoritos. Por ello, disponen de una 
-	página personal, "página del usuario".<br/><br/>
-	Cualquier navegador puede acceder a la interfaz pública del sitio, que ofrece la página personal 
-	de cada usuario, para cualquier usuario del sitio.<br/><br/>
-	Cualquier usuario podrá indicar que quiere una vista del sitio que solo incluya los Museos 
-	(accesibilidad = "1").<br/><br/>
+		Los usuarios son dados de alta desde el "Admin Site" de Django. Una vez dados de alta, son 
+		considerados "usuarios registrados".<br/><br/>
+		El listado de museos se cargará a partir del fichero XML cuando un usuario indique que se carguen.
+		Hasta que un usuario no indique que se carguen por primera vez, no habrá listado de museos en la base
+		de datos de la aplicación.<br/><br/>
+		Los usuarios registrados pueden crear su selección de museos favoritos. Por ello, disponen de una 
+		página personal, "página del usuario".<br/><br/>
+		Cualquier navegador puede acceder a la interfaz pública del sitio, que ofrece la página personal 
+		de cada usuario, para cualquier usuario del sitio.<br/><br/>
+		Cualquier usuario podrá indicar que quiere una vista del sitio que solo incluya los Museos 
+		(accesibilidad = "1").<br/><br/>
    </div>
 
 	<div id=minisubtitulo>Funcionalidad</div>
    <div id=descripcion>
-	<b>Interfaz pública:</b> La <i>página principal</i> (/) tiene un listado de museos y otro con enlaces a páginas
-	personales. <br/><br/>
-	Muestra un listado con los 5 museos con más comentarios (si no hubiera 5 se muestran los
-	que sí tengan comentarios) y aparece el nombre del museo (hipervínculo que enlaza a la URL del museo
-	en el portal esmadrid), su dirección y un enlace, "Más información, que apunta a la página del museo
-	en la aplicación.<br/><br/>
-	Muestra un listado (columna lateral) con enlaces a las "páginas de usuarios" disponibles. Para cada página
-	personal se muestra el título que le ha dado cada usuario (a modo de enlace a su página personal) y el
-	nombre de usuario. Si aún no tiene un título, se le asigna provisionalmente: "Página de id_usuario".<br/><br/>
-	También se muestra un botón que al pulsarlo se verán todos los museos accesibles y solo esos (volviendo 
-	a ver todos los museos al pulsar de nuevo).<br/><br/>
-	La <i>página de usuario</i> (/usuario) muestra los museos seleccionados por ese usuario de 5 en 5, 
-	separándolos en páginas si es necesario, y mostrando la fecha en que fueron marcados por el usuario.<br/><br/>
-	La <i>página todos</i> (/museos) con todos los museos, apareciendo únicamente el nombre, y un enlace a su página.
-	En la parte superior de la página se pueden filtrar (mediante un formulario desplegable) los museos según
-	el distrito en el que se encuentran.<br/><br/>
-	La <i>página de un museo</i> (/museos/id) muestra toda la información posible del XML del portal del Ayuntamiento 
-	además de todos los comentarios que tenga este museo.<br/><br/>
-	La <i>página de usuario xml</i> (/usuario/xml) muestra un documento xml con una entrada para cada museo 
-	seleccionado por ese usuario.<br/><br/>
-	La <i>página de información</i> (/about) en la que se encuentra ahora, con la descripción del funcionamiento
-	y autoría.<br/><br/>
+		<b>Interfaz pública:</b> La <i>página principal</i> (/) tiene un listado de museos y otro con enlaces a páginas
+		personales. <br/><br/>
+		Muestra un listado con los 5 museos con más comentarios (si no hubiera 5 se muestran los
+		que sí tengan comentarios) y aparece el nombre del museo (hipervínculo que enlaza a la URL del museo
+		en el portal esmadrid), su dirección y un enlace, "Más información, que apunta a la página del museo
+		en la aplicación.<br/><br/>
+		Muestra un listado (columna lateral) con enlaces a las "páginas de usuarios" disponibles. Para cada página
+		personal se muestra el título que le ha dado cada usuario (a modo de enlace a su página personal) y el
+		nombre de usuario. Si aún no tiene un título, se le asigna provisionalmente: "Página de id_usuario".<br/><br/>
+		También se muestra un botón que al pulsarlo se verán todos los museos accesibles y solo esos (volviendo 
+		a ver todos los museos al pulsar de nuevo).<br/><br/>
+		La <i>página de usuario</i> (/usuario) muestra los museos seleccionados por ese usuario de 5 en 5, 
+		separándolos en páginas si es necesario, y mostrando la fecha en que fueron marcados por el usuario.<br/><br/>
+		La <i>página todos</i> (/museos) con todos los museos, apareciendo únicamente el nombre, y un enlace a su página.
+		En la parte superior de la página se pueden filtrar (mediante un formulario desplegable) los museos según
+		el distrito en el que se encuentran.<br/><br/>
+		La <i>página de un museo</i> (/museos/id) muestra toda la información posible del XML del portal del Ayuntamiento 
+		además de todos los comentarios que tenga este museo.<br/><br/>
+		La <i>página de usuario xml</i> (/usuario/xml) muestra un documento xml con una entrada para cada museo 
+		seleccionado por ese usuario.<br/><br/>
+		La <i>página de información</i> (/about) en la que se encuentra ahora, con la descripción del funcionamiento
+		y autoría.<br/><br/>
 	
-	<b>Interfaz privada:</b> solo para los usuarios registrados, incluye cualquier funcionalidad de la interfaz
-	pública además de, en la<i>página de un museo</i> (/museos/id) un formulario para poner comentarios sobre
-	ese museo (comentarios anónimos aunque solo de usuarios registrados).<br/><br/>
-	En la<i>página de usuario</i> (/usuario) un formulario para cambiar el estilo CSS de todo el sitio para ese
-	usuario (tamaño de letra y color de fondo). Si se cambian estos valores, quedará cambiado para todas las páginas
-	del sitio para ese usuario. Y un formulario para elegir el título de su página personal.
-	<br/><br/>
+		<b>Interfaz privada:</b> solo para los usuarios registrados, incluye cualquier funcionalidad de la interfaz
+		pública además de, en la<i>página de un museo</i> (/museos/id) un formulario para poner comentarios sobre
+		ese museo (comentarios anónimos aunque solo de usuarios registrados).<br/><br/>
+		En la<i>página de usuario</i> (/usuario) un formulario para cambiar el estilo CSS de todo el sitio para ese
+		usuario (tamaño de letra y color de fondo). Si se cambian estos valores, quedará cambiado para todas las páginas
+		del sitio para ese usuario. Y un formulario para elegir el título de su página personal.
+		<br/><br/>
 
-	<b>Otros añadidos:</b> Favicon del sitio, sección de imágenes y citas ilustres (bajo estas líneas), 
-	diseño del banner.<br/><br/>
+		<b>Otros añadidos:</b> Favicon del sitio en todas las páginas, slider de imágenes y citas ilustres, diseño del banner, 
+		XML de página principal, JSON de página principal, JSON de página de usuario, RSS de comentarios (enlace desde inicio),
+		funcionalidad de registro de nuevos usuarios, video insertado en HTML5 en el about con la explicación de funcionalidad.
+		<br/><br/>
    </div>
 
    <div id=minisubtitulo>Autoría y motivación</div>
    <div id=descripcion>
-	Esta aplicación ha sido realizada por Adrián Payol Montero, <a href="https://github.com/apayol"class=
-	"bottom_link" style="color:#800000">apayol</a>. Fue creada como práctica final de la asignatura 
-	<b>Servicios y Aplicaciones Telemáticas (SAT)</b>, del tercer curso del grado de Ingeniería en Tecnologías 
-	de la Telecomunicación de la URJC, impartida por Jesús Gonzalez Barahona y Gregorio Robles Martínez, 
-	siguiendo en todo lo posible las indicaciones dadas.<br/>
+		Esta aplicación ha sido realizada por Adrián Payol Montero, <a href="https://github.com/apayol"class=
+		"bottom_link" style="color:#800000">apayol</a>. Fue creada como práctica final de la asignatura 
+		<b>Servicios y Aplicaciones Telemáticas (SAT)</b>, del tercer curso del grado de Ingeniería en Tecnologías 
+		de la Telecomunicación de la URJC, impartida por Jesús Gonzalez Barahona y Gregorio Robles Martínez, 
+		siguiendo en todo lo posible las indicaciones dadas.<br/><br/>
 	</div>
+
+	<div id=minisubtitulo>Vídeo de la funcionalidad básica:</div>
+   <div id=descripcion>
+		<iframe width="620" height="330" src="https://www.youtube.com/embed/85MppyLJHz0"  allowfullscreen></iframe>
+   </div><br/>
+	<div id=minisubtitulo>Vídeo de la funcionalidad optativa:</div>
+	<div id=descripcion>
+   	<iframe width="620" height="330" src="https://www.youtube.com/embed/85MppyLJHz0"  allowfullscreen></iframe>
+	</div>
+
 {% endblock %}
 
