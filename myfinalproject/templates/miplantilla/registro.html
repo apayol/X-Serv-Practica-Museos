@@ -1,0 +1,17 @@
+{% extends "miplantilla/index.html" %}
+
+{% block menu %}
+	<td><div class="navigation"><a href="/" class="main_link">Inicio</a></div></td>
+{% endblock %}
+
+{% block title %}
+    Registro
+{% endblock %}
+
+      
+{% block content %}
+   <div id=minisubtitulo>Introduzca su nuevo usuario y contraseña</div><br/>
+	{{registro_form|safe}}  
+	
+{% endblock %}
+

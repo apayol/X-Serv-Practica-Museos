@@ -36,5 +36,6 @@ urlpatterns = [
     url(r'^xml$', views.xml_inicio, name="XML de la página de inicio"),
     url(r'^json$', views.json_inicio, name="JSON de la página de inicio"),
     url(r'^rss$', views.rss_comentarios, name="RSS de comentarios"),
+    url(r'^registro$', views.registro, name="Registrar nuevos usuarios"),
     url(r'^(.*)$', views.usuario, name="Página particular de usuario"),
 ]

@@ -383,7 +383,25 @@ def rss_comentarios(request):
     respuesta = template.render(c)
     return HttpResponse(respuesta, content_type="text/rss")
 
+@csrf_exempt
+def registro(request):
+    template = get_template('miplantilla/registro.html')
+    if request.method == "GET":
+        registro_form = "<form class='register' method='POST' action='/registro'>"
+        registro_form += "<table><tr><td>Usuario:</td><td><input name='username'>"
+        registro_form += "</td></tr><tr><td>Contraseña:</td><td>"
+        registro_form += "<input name='password' type='password'></td></tr>"
+        registro_form += "</table><input class='boton' type='submit' "
+        registro_form += "value='Registrarme'></form>"
+    elif request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        nuevo_usuario = User.objects.create_user(username=username, password=password)
+        nuevo_usuario.save()
+        registro_form = ""
+        return HttpResponseRedirect('/')
 
-
-
+    c = RequestContext(request, {'registro_form': registro_form})
+    respuesta = template.render(c)
+    return HttpResponse(respuesta)
 
