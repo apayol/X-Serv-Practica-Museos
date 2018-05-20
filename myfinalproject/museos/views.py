@@ -292,7 +292,7 @@ def usuario(request,user):
             # Cambiar estilo de CSS
             form2 = "<form action='/" + usuario + "'  method='POST'>"
             form2 += "Color de fondo: <input type= 'text' name='nuevo_color' size='10'>  "
-            form2 += " Tamaño de letra: <input type= 'text' name='nueva_letra' size='10'>"
+            form2 += " Tamaño de letra (%): <input type= 'text' name='nueva_letra' size='10'>"
             form2 += "<input type= 'hidden' name='formulario' value='2'> "
             form2 += "<input type= 'submit' value='Enviar'>"
             form2 += "</form>" 
@@ -408,8 +408,11 @@ def registro(request):
 def css(request, nombre_css):
     if request.user.is_authenticated():
         print("Cargando plantilla de usuario...")
-        tamaño_letra = '100%'
-        color_fondo = 'red'
+        conf_usu = ConfigUsuario.objects.get(usuario=request.user)
+        tamaño_letra = conf_usu.tamaño_letra
+        color_fondo = conf_usu.color_fondo
+        tamaño_letra = str(tamaño_letra) + '%'
+        print(tamaño_letra)
     else:
         # plantilla por defecto
         tamaño_letra = '75%'
