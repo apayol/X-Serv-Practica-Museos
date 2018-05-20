@@ -2,7 +2,7 @@ body {
 	margin: 0px;
 	background-color: #000000;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 12px; <!--Tamaño letra-->
+	font-size: {{tamaño_letra|safe}}; <!--Tamaño letra-->
 }
 table.linkcontainer td{
 	background-color: #000000;
@@ -40,7 +40,7 @@ td.middle_spacer {
 
 td.body_content {
 	padding: 20px;
-   background-color: #FFFFFF; <!--Color Usuario-->
+   background-color: {{color_fondo|safe}}; <!--Color Usuario-->
    font-size: 12px;
    margin-right: 20px;
 }
@@ -112,6 +112,7 @@ td.left_content {
 	width: 200px;
 	padding: 5px;
 	vertical-align: top;
+   background-color: {{color_fondo|safe}}; <!--Color Usuario-->
 }
 
 a.main_link:active,a.main_link:visited,a.main_link:link{

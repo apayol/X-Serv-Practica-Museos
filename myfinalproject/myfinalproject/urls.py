@@ -24,6 +24,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'static/css/(.*)$', views.css, name="cargar css"),
     url(r'static/(.*)$', serve, {'document_root': 'templates/miplantilla'}),
     url(r'^$', views.inicio, name='Página principal'),
     url(r'^museos$', views.todos, name='Página todos los museos'),

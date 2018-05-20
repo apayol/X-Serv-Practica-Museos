@@ -405,3 +405,18 @@ def registro(request):
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
+def css(request, nombre_css):
+    if request.user.is_authenticated():
+        print("Cargando plantilla de usuario...")
+        tamaño_letra = '100%'
+        color_fondo = 'red'
+    else:
+        # plantilla por defecto
+        tamaño_letra = '75%'
+        color_fondo = 'white'
+
+    template = get_template("miplantilla/css/style.css")
+    c = Context({'tamaño_letra': tamaño_letra, 'color_fondo': color_fondo})
+    respuesta = template.render(c)
+    return HttpResponse(respuesta, content_type="text/css")
+
