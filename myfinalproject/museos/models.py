@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class Museo(models.Model):
@@ -41,4 +40,4 @@ class Seleccionado(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return "Selección de: " + self.usuario.usuario + ", " + self.museo.nombre
-  
+

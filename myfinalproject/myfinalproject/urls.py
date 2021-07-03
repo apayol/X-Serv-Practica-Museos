@@ -16,8 +16,6 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from museos import views
-from django.contrib.auth.views import logout
-from django.contrib.auth.views import login
 from django.views.static import serve
 from django.views.generic import TemplateView
 

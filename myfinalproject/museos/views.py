@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.template import Context, RequestContext
@@ -26,9 +25,9 @@ def inicio(request):
             link_parse() # Cargo la info de museos en mi base de datos
             print ("Asignando los atributos de models Museo...")
             return HttpResponseRedirect('/')
-    
+
     else:   # CON MUSEOS
-      
+
         if request.method == "GET":
             titulo = "Museos con más comentarios"
             filtrar = "<form method = 'POST'><button type='submit'"
@@ -52,7 +51,7 @@ def inicio(request):
         lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
         lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
         lista_museos = lista_museos[0:5]  # los 5 primeros
-        
+
         # Para la barra de usuarios lateral
         lista_usuarios = ConfigUsuario.objects.all()
 
@@ -66,10 +65,10 @@ def inicio(request):
 def todos(request):
     template = get_template ('miplantilla/todos.html')
     titulo = "Todos los museos"
-    dist_elegido= ""
+    dist_elegido = ""
     if request.method == 'GET':
         lista_museos = Museo.objects.all()
-        
+
         # opciones del desplegable
         lista_distritos = Museo.objects.order_by()  # distritos por orden
         lista_distritos = lista_distritos.values_list('distrito', flat=True).distinct()
@@ -88,7 +87,7 @@ def todos(request):
         lista_museos = ""
         lista_distritos = Museo.objects.filter(distrito=dist_elegido)
         lista_museos = lista_distritos
-        
+
         # opciones del desplegable
         lista_distritos = Museo.objects.order_by()
         lista_distritos = lista_distritos.values_list('distrito', flat=True).distinct()
@@ -103,10 +102,10 @@ def todos(request):
         #formulario para ver todos
         filtrar += "<form action='/museos' method='GET'>"
         filtrar += "<input type= 'submit' value='Volver a "
-        filtrar += "mostrar TODOS los museos'></form>" 
+        filtrar += "mostrar TODOS los museos'></form>"
 
-    c = RequestContext(request, {'titulo':titulo, 'filtrar':filtrar, 'museos': lista_museos}) 
-    
+    c = RequestContext(request, {'titulo':titulo, 'filtrar':filtrar, 'museos': lista_museos})
+
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
@@ -124,7 +123,7 @@ def museo(request, id):
     #comentarios
     lista_coments = Comentario.objects.all()
     coments_museo = lista_coments.filter(museo=museo_elegido)
-    
+
     #INTERFAZ PRIVADA
     form = '' #Sin formulario si no authenticated
     form2 = ''
@@ -135,8 +134,8 @@ def museo(request, id):
         form += "<input type= 'text' name='texto' size='80'>"
         form += "<input type= 'hidden' name='formulario' value='1'> "
         form += "<input type= 'submit' value='Enviar'>"
-        form += "</form>"      
-        
+        form += "</form>"
+
         select = ConfigUsuario.objects.get(usuario=request.user)
         if request.method == "GET":
             try: #Si ya está seleccionado
@@ -147,7 +146,7 @@ def museo(request, id):
                 form2 += "<input type= 'submit' value='Deseleccionar museo'>"
                 form2 += "<input type= 'hidden' name='formulario' value='3'> "
                 form2 += "</form>"
-            
+
             except Seleccionado.DoesNotExist: #Si no está seleccionado
                 textoseleccion = "¿AÑADIR A SELECCIONADOS?"
                 #añadir a mi selección de museos
@@ -155,7 +154,7 @@ def museo(request, id):
                 form2 += "<input type= 'submit' value='Seleccionar museo'>"
                 form2 += "<input type= 'hidden' name='formulario' value='2'> "
                 form2 += "</form>"
-                    
+
         elif request.method == "POST":
             formu = request.POST['formulario']
             if formu == "1": # Si envío comentario
@@ -184,7 +183,7 @@ def museo(request, id):
             elif formu == "2": # Si añado a selección
                 # Guardo en mi base de datos la selección
                 nueva_seleccion = Seleccionado(usuario=select, museo=museo_elegido)
-                nueva_seleccion.save() 
+                nueva_seleccion.save()
                 print("se ha añadido")
                 textoseleccion = "PERTENECE A TU SELECCIÓN"
                 form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
@@ -194,18 +193,18 @@ def museo(request, id):
             elif formu == "3": # Si borro de selección
                 # Guardo en mi base de datos la deselección
                 nueva_seleccion = Seleccionado.objects.get(usuario=select, museo=museo_elegido)
-                nueva_seleccion.delete() 
+                nueva_seleccion.delete()
                 print("se ha borrado")
                 textoseleccion = "¿AÑADIR A SELECCIONADOS?"
                 form2 = "<form action='/museos/" + str(id) + "' method='POST'>"
                 form2 += "<input type= 'submit' value='Seleccionar museo'>"
                 form2 += "<input type= 'hidden' name='formulario' value='2'> "
-                form2 += "</form>"             
+                form2 += "</form>"
 
     c = RequestContext(request, {'titulo':titulo, 'museo': museo_elegido,
 		 'accesible': accesible, 'comentarios': coments_museo, 'form': form,
-       'form2': form2, 'textoseleccion': textoseleccion}) 
-    
+       'form2': form2, 'textoseleccion': textoseleccion})
+
     respuesta = template.render(c)
     return HttpResponse(respuesta)
 
@@ -225,9 +224,9 @@ def login_form(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                try: 
+                try:
                     registrado = ConfigUsuario.objects.get(usuario=username)
-                except ConfigUsuario.DoesNotExist: 
+                except ConfigUsuario.DoesNotExist:
                     registrado = ConfigUsuario(usuario=username)
                     registrado.titulo = "Página de " + str(user) #inicializo el título
                     registrado.save() #lo guardo en mi models
@@ -243,7 +242,7 @@ def logout_form(request):
     return HttpResponseRedirect('/')
 
 @csrf_exempt
-def usuario(request,user):
+def usuario(request, user):
     template = get_template ('miplantilla/usuario.html')
     # Inicializo el id para hacer la qs y poder acceder por páginas
     id = request.GET.get('id')
@@ -251,7 +250,7 @@ def usuario(request,user):
         id = 0
     else:
         id = int(id)
-    
+
     try:
         pagina_usuario = ConfigUsuario.objects.get(usuario=user)
         titulo = pagina_usuario.titulo
@@ -262,12 +261,12 @@ def usuario(request,user):
         #solo los seleccionados, de 5 en 5 por id.
         lista_museos_usuario = Seleccionado.objects.filter(usuario=pagina_usuario)[id:id+5]
         id += 5  # A siguiente página
-         
+
         if id >= total_museos_selec and total_museos_selec < 5:
             id = -1 # Solo hay una página
         elif id >= total_museos_selec:
             id = 0  # Para volver al inicio
-        
+
         # Botón para generar el canal XML de página usuario
         xml_usu_form = '<form method="GET" action="/'+usuario+'/xml">'
         xml_usu_form += '<button type="submit">Generar canal XML</button>'
@@ -277,10 +276,10 @@ def usuario(request,user):
         json_usu_form = '<form method="GET" action="/'+usuario+'/json">'
         json_usu_form += '<button type="submit">Generar canal JSON</button>'
         json_usu_form += '</form>'
-    
+
         form1 = ''
         form2 = ''
-        # INTERFAZ PRIVADA: 
+        # INTERFAZ PRIVADA:
         # ha de estár autentificado y en su página
         if request.user.is_authenticated() and user == usuario:
             # Cambiar de título personal
@@ -295,8 +294,8 @@ def usuario(request,user):
             form2 += " Tamaño de letra (%): <input type= 'text' name='nueva_letra' size='10'>"
             form2 += "<input type= 'hidden' name='formulario' value='2'> "
             form2 += "<input type= 'submit' value='Enviar'>"
-            form2 += "</form>" 
- 
+            form2 += "</form>"
+
             if request.method == "POST":
                 formu = request.POST['formulario']
                 if formu == "1": # Si envío nuevo título
@@ -309,11 +308,11 @@ def usuario(request,user):
                     # Actualizo el color de fondo
                     ConfigUsuario.objects.filter(usuario=request.user).update(color_fondo=color)
                     ConfigUsuario.objects.filter(usuario=request.user).update(tamaño_letra=letra)
-    
-    # si el recurso es incorrecto (nombre de usuario no registrado) 
-    except ConfigUsuario.DoesNotExist: 
+
+    # si el recurso es incorrecto (nombre de usuario no registrado)
+    except ConfigUsuario.DoesNotExist:
         titulo = "Error, url no existe"
-        lista_museos_usuario = '' 
+        lista_museos_usuario = ''
         usuario = ''
         form1 = ''
         form2 = ''
@@ -321,9 +320,9 @@ def usuario(request,user):
         xml_usu_form = ''
         json_usu_form = ''
 
-    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario, 
+    c = RequestContext(request, {'titulo': titulo, 'seleccionados': lista_museos_usuario,
         'id': id, 'usuario': usuario, 'form1': form1, 'form2': form2, 'xml_usu_form': xml_usu_form,
-        'json_usu_form': json_usu_form}) 
+        'json_usu_form': json_usu_form})
 
     respuesta = template.render(c)
     return HttpResponse(respuesta)
@@ -332,7 +331,7 @@ def xml_usuario(request, user):
     # Generar canal XML de la página de usuario.
     template = get_template('miplantilla/usuario_xml.xml')
     usuario = ConfigUsuario.objects.get(usuario=user)
-    selecc_usuario = Seleccionado.objects.filter(usuario=usuario)  
+    selecc_usuario = Seleccionado.objects.filter(usuario=usuario)
 
     c = RequestContext(request, {'usuario': usuario, 'seleccionados': selecc_usuario})
     respuesta = template.render(c)
@@ -342,7 +341,7 @@ def json_usuario(request, user):
     # Generar canal JSON de la página de usuario.
     template = get_template('miplantilla/usuario_json.json')
     usuario = ConfigUsuario.objects.get(usuario=user)
-    selecc_usuario = Seleccionado.objects.filter(usuario=usuario)  
+    selecc_usuario = Seleccionado.objects.filter(usuario=usuario)
 
     c = RequestContext(request, {'usuario': usuario, 'seleccionados': selecc_usuario})
     respuesta = template.render(c)
@@ -355,7 +354,7 @@ def xml_inicio(request):
     lista_museos = Museo.objects.all()
     lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
     lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
-    lista_museos = lista_museos[0:5] 
+    lista_museos = lista_museos[0:5]
 
     c = RequestContext(request, {'museos': lista_museos})
     respuesta = template.render(c)
@@ -368,7 +367,7 @@ def json_inicio(request):
     lista_museos = Museo.objects.all()
     lista_museos = lista_museos.exclude(num_comentarios=0)  # excluyo sin comentarios
     lista_museos = lista_museos.order_by('-num_comentarios')  # ordeno de mayor a menor
-    lista_museos = lista_museos[0:5] 
+    lista_museos = lista_museos[0:5]
 
     c = RequestContext(request, {'museos': lista_museos})
     respuesta = template.render(c)
