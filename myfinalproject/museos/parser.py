@@ -2,7 +2,6 @@
 
 from xml.sax.handler import ContentHandler
 from xml.sax import make_parser, SAXParseException
-import sys
 from urllib import request
 from .models import Museo
 
@@ -27,18 +26,18 @@ class myContentHandler(ContentHandler):
         self.horario = ""
         self.telefono = ""
         self.email = ""
-        
+
 
     def startElement (self, name, attrs):
         if name == "atributo":
             self.inItem = attrs.get("nombre")
-        if attrs.get("nombre") in ["NOMBRE","ACCESIBILIDAD","CLASE-VIAL",
-                                    "NOMBRE-VIA","NUM","CODIGO-POSTAL",
-                                    "LOCALIDAD","BARRIO","DISTRITO",
-                                    "CONTENT-URL","DESCRIPCION-ENTIDAD",
-                                    "HORARIO","TELEFONO","EMAIL"]:
+        if attrs.get("nombre") in ["NOMBRE", "ACCESIBILIDAD", "CLASE-VIAL", 
+                                    "NOMBRE-VIA", "NUM", "CODIGO-POSTAL", 
+                                    "LOCALIDAD", "BARRIO", "DISTRITO", 
+                                    "CONTENT-URL", "DESCRIPCION-ENTIDAD", 
+                                    "HORARIO", "TELEFONO", "EMAIL"]:
             self.inContent = True
-            
+
     def endElement (self, name):
         if self.inItem == "NOMBRE":
             self.nombre = self.theContent
